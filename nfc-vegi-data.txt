@@ -1,0 +1,1 @@
+{"id":"/nfc-vegi-data.txt","path":"/nfc-vegi-data.txt","sha":"557af5916527408feeb3507884395136a1ae3cd8","mime_type":"text/plain","size":192000,"site_id":"ea1af736-aaab-419e-b769-fa0b55b6f51a","deploy_id":"69be33531e6683cfda762455"}

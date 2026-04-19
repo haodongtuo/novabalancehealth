@@ -1,0 +1,1 @@
+{"id":"/netlify/functions/verify_nfc.js","path":"/netlify/functions/verify_nfc.js","sha":"4c605f45d9b59d52ef98dce58fa0060dfc64f407","mime_type":"application/javascript","size":1840,"site_id":"ea1af736-aaab-419e-b769-fa0b55b6f51a","deploy_id":"69be33531e6683cfda762455"}
