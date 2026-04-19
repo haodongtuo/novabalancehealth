@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FemBalance™ | NowaBalanceHealth LLC</title>
+    <title>FemBalance�?| NowaBalanceHealth LLC</title>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
       "@type": "Product",
-      "name": "FemBalance™",
-      "description": "FemBalance™ is a daily probiotic supplement designed to support women's intimate microbiome and overall balance during the hormonal transitions of midlife. Supports vaginal and urinary tract microbial harmony.",
+      "name": "FemBalance�?,
+      "description": "FemBalance�?is a daily probiotic supplement designed to support women's intimate microbiome and overall balance during the hormonal transitions of midlife. Supports vaginal and urinary tract microbial harmony.",
       "brand": {
         "@type": "Brand",
         "name": "NovaBalance Health"
@@ -85,7 +85,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <!-- Product Image -->
             <div class="bg-white rounded-2xl p-8 border border-slate-200 flex flex-col items-center justify-center min-h-[400px]">
-                <div class="text-slate-400 text-lg mb-4">[High-Resolution Image of FemBalance™ Bottle]</div>
+                <div class="text-slate-400 text-lg mb-4">[High-Resolution Image of FemBalance�?Bottle]</div>
                 <div class="flex gap-2 mt-4">
                     <span class="w-2 h-2 rounded-full bg-[#00B4D8]"></span>
                     <span class="w-2 h-2 rounded-full bg-slate-200"></span>
@@ -96,18 +96,18 @@
             <!-- Product Info -->
             <div class="flex flex-col">
                 <div class="flex justify-between items-start mb-4">
-                    <h1 class="text-4xl font-bold text-[#0A2540]">FemBalance™</h1>
-                    <span class="text-2xl font-bold text-[#00B4D8]">$45.00</span>
+                    <h1 class="text-4xl font-bold text-[#0A2540]">FemBalance�?/h1>
+                    <span id="product-price" class="text-2xl font-bold text-[#00B4D8]">$45.00</span>
                 </div>
                 <h2 class="text-lg text-slate-500 font-medium mb-4">Women’s Probiotic & Menopause Support</h2>
                 
                 <div class="flex items-center gap-2 mb-6">
-                    <div class="flex text-yellow-400">★★★★★</div>
+                    <div class="flex text-yellow-400">★★★★�?/div>
                     <span class="text-slate-500 text-sm">(128 Reviews)</span>
                 </div>
                 
                 <p class="text-slate-600 mb-6 leading-relaxed">
-                    FemBalance™ is a daily probiotic supplement designed to support women’s intimate microbiome and overall balance during the hormonal transitions of midlife. With a carefully selected blend of women-focused probiotic strains, FemBalance™ helps maintain vaginal and urinary tract microbial harmony while supporting everyday comfort and well-being.
+                    FemBalance�?is a daily probiotic supplement designed to support women’s intimate microbiome and overall balance during the hormonal transitions of midlife. With a carefully selected blend of women-focused probiotic strains, FemBalance�?helps maintain vaginal and urinary tract microbial harmony while supporting everyday comfort and well-being.
                 </p>
 
                 <!-- Key Benefits (Short version) -->
@@ -140,7 +140,7 @@
                     
                     <div>
                         <h4 class="font-bold text-[#0A2540] text-base border-b pb-1 mb-2">Formula Logic</h4>
-                        <p class="mb-2">FemBalance™ features high-potency probiotics selected for women’s microbiome support. The formulation focuses on:</p>
+                        <p class="mb-2">FemBalance�?features high-potency probiotics selected for women’s microbiome support. The formulation focuses on:</p>
                         <ul class="list-disc pl-5 space-y-1">
                             <li>Lactobacillus strains commonly found in a healthy female microbiome</li>
                             <li>High potency probiotics (50 Billion CFU or more) for daily support</li>
@@ -152,7 +152,7 @@
 
                     <div>
                         <h4 class="font-bold text-[#0A2540] text-base border-b pb-1 mb-2">Who It’s For</h4>
-                        <p class="mb-2">FemBalance™ is ideal for women who:</p>
+                        <p class="mb-2">FemBalance�?is ideal for women who:</p>
                         <ul class="list-disc pl-5 space-y-1">
                             <li>Want to support vaginal microbiome balance</li>
                             <li>Are experiencing menopause or perimenopause</li>
@@ -200,6 +200,14 @@
                 text.innerText = 'Show Less';
             }
         }
+    </script>
+    <script>
+        fetch("/products.json")
+          .then(function(r){ return r.json(); })
+          .then(function(data){
+            var p = data.products.find(function(x){ return x.id === "fembalance"; });
+            if (p) document.getElementById("product-price").textContent = "$" + p.price.toFixed(2);
+          }).catch(function(){});
     </script>
 </body>
 </html>

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VagiBalance™ | NowaBalanceHealth LLC</title>
+    <title>VagiBalance�?| NowaBalanceHealth LLC</title>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
       "@type": "Product",
-      "name": "VagiBalance™",
-      "description": "VagiBalance™ is a gentle vaginal care gel designed to help maintain a healthy vaginal pH environment and support everyday feminine comfort. Lightweight, non-irritating, pH-balanced formula.",
+      "name": "VagiBalance�?,
+      "description": "VagiBalance�?is a gentle vaginal care gel designed to help maintain a healthy vaginal pH environment and support everyday feminine comfort. Lightweight, non-irritating, pH-balanced formula.",
       "brand": {
         "@type": "Brand",
         "name": "NovaBalance Health"
@@ -85,7 +85,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <!-- Product Image -->
             <div class="bg-white rounded-2xl p-8 border border-slate-200 flex flex-col items-center justify-center min-h-[400px]">
-                <div class="text-slate-400 text-lg mb-4">[High-Resolution Image of VagiBalance™ Bottle]</div>
+                <div class="text-slate-400 text-lg mb-4">[High-Resolution Image of VagiBalance�?Bottle]</div>
                 <div class="flex gap-2 mt-4">
                     <span class="w-2 h-2 rounded-full bg-[#00B4D8]"></span>
                     <span class="w-2 h-2 rounded-full bg-slate-200"></span>
@@ -96,18 +96,18 @@
             <!-- Product Info -->
             <div class="flex flex-col">
                 <div class="flex justify-between items-start mb-4">
-                    <h1 class="text-4xl font-bold text-[#0A2540]">VagiBalance™</h1>
-                    <span class="text-2xl font-bold text-[#00B4D8]">$39.99</span>
+                    <h1 class="text-4xl font-bold text-[#0A2540]">VagiBalance�?/h1>
+                    <span id="product-price" class="text-2xl font-bold text-[#00B4D8]">$39.99</span>
                 </div>
                 <h2 class="text-lg text-slate-500 font-medium mb-4">Vaginal pH Balance Gel</h2>
                 
                 <div class="flex items-center gap-2 mb-6">
-                    <div class="flex text-yellow-400">★★★★★</div>
+                    <div class="flex text-yellow-400">★★★★�?/div>
                     <span class="text-slate-500 text-sm">(128 Reviews)</span>
                 </div>
                 
                 <p class="text-slate-600 mb-6 leading-relaxed">
-                    VagiBalance™ is a gentle vaginal care gel designed to help maintain a healthy vaginal pH environment and support everyday feminine comfort. The formula is designed for women seeking simple and effective intimate care as part of their personal wellness routine.
+                    VagiBalance�?is a gentle vaginal care gel designed to help maintain a healthy vaginal pH environment and support everyday feminine comfort. The formula is designed for women seeking simple and effective intimate care as part of their personal wellness routine.
                 </p>
 
                 <!-- Key Benefits (Short version) -->
@@ -140,7 +140,7 @@
                     
                     <div>
                         <h4 class="font-bold text-[#0A2540] text-base border-b pb-1 mb-2">Formula Features</h4>
-                        <p class="mb-2">VagiBalance™ is formulated with carefully selected ingredients to support vaginal comfort and hydration. Key characteristics include:</p>
+                        <p class="mb-2">VagiBalance�?is formulated with carefully selected ingredients to support vaginal comfort and hydration. Key characteristics include:</p>
                         <ul class="list-disc pl-5 space-y-1">
                             <li>pH-balanced formulation</li>
                             <li>Lightweight and non-irritating gel texture</li>
@@ -151,7 +151,7 @@
 
                     <div>
                         <h4 class="font-bold text-[#0A2540] text-base border-b pb-1 mb-2">Who It’s For</h4>
-                        <p class="mb-2">VagiBalance™ may be suitable for women who:</p>
+                        <p class="mb-2">VagiBalance�?may be suitable for women who:</p>
                         <ul class="list-disc pl-5 space-y-1">
                             <li>Want to maintain vaginal pH balance</li>
                             <li>Experience occasional dryness or discomfort</li>
@@ -198,6 +198,14 @@
                 text.innerText = 'Show Less';
             }
         }
+    </script>
+    <script>
+        fetch("/products.json")
+          .then(function(r){ return r.json(); })
+          .then(function(data){
+            var p = data.products.find(function(x){ return x.id === "vagibalance"; });
+            if (p) document.getElementById("product-price").textContent = "$" + p.price.toFixed(2);
+          }).catch(function(){});
     </script>
 </body>
 </html>

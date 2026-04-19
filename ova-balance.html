@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OvaBalance™ | NowaBalanceHealth LLC</title>
+    <title>OvaBalance�?| NowaBalanceHealth LLC</title>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
       "@type": "Product",
-      "name": "OvaBalance™",
-      "description": "OvaBalance™ is a targeted supplement to support women's hormone balance and reproductive wellness. Formulated for hormone and fertility support during key life stages.",
+      "name": "OvaBalance�?,
+      "description": "OvaBalance�?is a targeted supplement to support women's hormone balance and reproductive wellness. Formulated for hormone and fertility support during key life stages.",
       "brand": {
         "@type": "Brand",
         "name": "NovaBalance Health"
@@ -80,7 +80,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <!-- Product Image -->
             <div class="bg-white rounded-2xl p-8 border border-slate-200 flex flex-col items-center justify-center min-h-[400px]">
-                <div class="text-slate-400 text-lg mb-4">[High-Resolution Image of OvaBalance™ Bottle]</div>
+                <div class="text-slate-400 text-lg mb-4">[High-Resolution Image of OvaBalance�?Bottle]</div>
                 <div class="flex gap-2 mt-4">
                     <span class="w-2 h-2 rounded-full bg-[#00B4D8]"></span>
                     <span class="w-2 h-2 rounded-full bg-slate-200"></span>
@@ -91,18 +91,18 @@
             <!-- Product Info -->
             <div class="flex flex-col">
                 <div class="flex justify-between items-start mb-4">
-                    <h1 class="text-4xl font-bold text-[#0A2540]">OvaBalance™</h1>
-                    <span class="text-2xl font-bold text-[#00B4D8]">$42.50</span>
+                    <h1 class="text-4xl font-bold text-[#0A2540]">OvaBalance�?/h1>
+                    <span id="product-price" class="text-2xl font-bold text-[#00B4D8]">$42.50</span>
                 </div>
                 <h2 class="text-lg text-slate-500 font-medium mb-4">Women’s Hormone & Fertility Support</h2>
                 
                 <div class="flex items-center gap-2 mb-6">
-                    <div class="flex text-yellow-400">★★★★★</div>
+                    <div class="flex text-yellow-400">★★★★�?/div>
                     <span class="text-slate-500 text-sm">(128 Reviews)</span>
                 </div>
                 
                 <p class="text-slate-600 mb-6 leading-relaxed">
-                    OvaBalance™ is a nutritional supplement designed to support women’s hormonal balance and reproductive wellness. The formula combines key nutrients traditionally used to support metabolic balance and overall reproductive health.
+                    OvaBalance�?is a nutritional supplement designed to support women’s hormonal balance and reproductive wellness. The formula combines key nutrients traditionally used to support metabolic balance and overall reproductive health.
                 </p>
 
                 <!-- Key Benefits (Short version) -->
@@ -135,7 +135,7 @@
                     
                     <div>
                         <h4 class="font-bold text-[#0A2540] text-base border-b pb-1 mb-2">Formula Logic</h4>
-                        <p class="mb-2">OvaBalance™ combines carefully selected nutrients often associated with reproductive health support. The formulation may include ingredients commonly used for:</p>
+                        <p class="mb-2">OvaBalance�?combines carefully selected nutrients often associated with reproductive health support. The formulation may include ingredients commonly used for:</p>
                         <ul class="list-disc pl-5 space-y-1">
                             <li>Hormonal balance support</li>
                             <li>Metabolic health</li>
@@ -147,7 +147,7 @@
 
                     <div>
                         <h4 class="font-bold text-[#0A2540] text-base border-b pb-1 mb-2">Who It’s For</h4>
-                        <p class="mb-2">OvaBalance™ may be suitable for women who:</p>
+                        <p class="mb-2">OvaBalance�?may be suitable for women who:</p>
                         <ul class="list-disc pl-5 space-y-1">
                             <li>Want to support hormone balance</li>
                             <li>Are planning for pregnancy in the future</li>
@@ -194,6 +194,14 @@
                 text.innerText = 'Show Less';
             }
         }
+    </script>
+    <script>
+        fetch("/products.json")
+          .then(function(r){ return r.json(); })
+          .then(function(data){
+            var p = data.products.find(function(x){ return x.id === "ovabalance"; });
+            if (p) document.getElementById("product-price").textContent = "$" + p.price.toFixed(2);
+          }).catch(function(){});
     </script>
 </body>
 </html>

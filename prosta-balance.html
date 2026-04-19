@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProstaBalance™ | NowaBalanceHealth LLC</title>
+    <title>ProstaBalance�?| NowaBalanceHealth LLC</title>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
       "@type": "Product",
-      "name": "ProstaBalance™",
-      "description": "ProstaBalance™ is a targeted supplement formulated to support men's prostate health and overall urinary wellness. Designed for men seeking prostate and urinary tract support.",
+      "name": "ProstaBalance�?,
+      "description": "ProstaBalance�?is a targeted supplement formulated to support men's prostate health and overall urinary wellness. Designed for men seeking prostate and urinary tract support.",
       "brand": {
         "@type": "Brand",
         "name": "NovaBalance Health"
@@ -80,7 +80,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <!-- Product Image -->
             <div class="bg-white rounded-2xl p-8 border border-slate-200 flex flex-col items-center justify-center min-h-[400px]">
-                <div class="text-slate-400 text-lg mb-4">[High-Resolution Image of ProstaBalance™ Bottle]</div>
+                <div class="text-slate-400 text-lg mb-4">[High-Resolution Image of ProstaBalance�?Bottle]</div>
                 <div class="flex gap-2 mt-4">
                     <span class="w-2 h-2 rounded-full bg-[#00B4D8]"></span>
                     <span class="w-2 h-2 rounded-full bg-slate-200"></span>
@@ -91,18 +91,18 @@
             <!-- Product Info -->
             <div class="flex flex-col">
                 <div class="flex justify-between items-start mb-4">
-                    <h1 class="text-4xl font-bold text-[#0A2540]">ProstaBalance™</h1>
-                    <span class="text-2xl font-bold text-[#00B4D8]">$42.50</span>
+                    <h1 class="text-4xl font-bold text-[#0A2540]">ProstaBalance�?/h1>
+                    <span id="product-price" class="text-2xl font-bold text-[#00B4D8]">$42.50</span>
                 </div>
                 <h2 class="text-lg text-slate-500 font-medium mb-4">Men’s Prostate Support</h2>
                 
                 <div class="flex items-center gap-2 mb-6">
-                    <div class="flex text-yellow-400">★★★★★</div>
+                    <div class="flex text-yellow-400">★★★★�?/div>
                     <span class="text-slate-500 text-sm">(128 Reviews)</span>
                 </div>
                 
                 <p class="text-slate-600 mb-6 leading-relaxed">
-                    ProstaBalance™ is a daily supplement designed to support prostate health and urinary comfort for men. The formula combines traditional botanical ingredients and nutrients commonly used to support prostate function and overall male wellness.
+                    ProstaBalance�?is a daily supplement designed to support prostate health and urinary comfort for men. The formula combines traditional botanical ingredients and nutrients commonly used to support prostate function and overall male wellness.
                 </p>
 
                 <!-- Key Benefits (Short version) -->
@@ -135,7 +135,7 @@
                     
                     <div>
                         <h4 class="font-bold text-[#0A2540] text-base border-b pb-1 mb-2">Formula Logic</h4>
-                        <p class="mb-2">ProstaBalance™ contains a combination of botanicals and nutrients traditionally used for prostate support. The formula may include:</p>
+                        <p class="mb-2">ProstaBalance�?contains a combination of botanicals and nutrients traditionally used for prostate support. The formula may include:</p>
                         <ul class="list-disc pl-5 space-y-1">
                             <li>Plant extracts commonly associated with prostate health</li>
                             <li>Nutrients that support male wellness</li>
@@ -146,7 +146,7 @@
 
                     <div>
                         <h4 class="font-bold text-[#0A2540] text-base border-b pb-1 mb-2">Who It’s For</h4>
-                        <p class="mb-2">ProstaBalance™ may be suitable for men who:</p>
+                        <p class="mb-2">ProstaBalance�?may be suitable for men who:</p>
                         <ul class="list-disc pl-5 space-y-1">
                             <li>Want to support prostate health</li>
                             <li>Experience age-related prostate changes</li>
@@ -193,6 +193,14 @@
                 text.innerText = 'Show Less';
             }
         }
+    </script>
+    <script>
+        fetch("/products.json")
+          .then(function(r){ return r.json(); })
+          .then(function(data){
+            var p = data.products.find(function(x){ return x.id === "prostabalance"; });
+            if (p) document.getElementById("product-price").textContent = "$" + p.price.toFixed(2);
+          }).catch(function(){});
     </script>
 </body>
 </html>

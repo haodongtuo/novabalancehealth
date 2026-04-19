@@ -1,0 +1,40 @@
+{
+  "products": [
+    {
+      "id": "fembalance",
+      "name": "FemBalance™",
+      "subtitle": "Women's Probiotic & Menopause Support",
+      "price": 45.00,
+      "currency": "USD",
+      "url": "/product.html",
+      "availability": "in_stock"
+    },
+    {
+      "id": "vagibalance",
+      "name": "VagiBalance™",
+      "subtitle": "Vaginal pH Balance Gel",
+      "price": 39.99,
+      "currency": "USD",
+      "url": "/vagi-balance.html",
+      "availability": "in_stock"
+    },
+    {
+      "id": "ovabalance",
+      "name": "OvaBalance™",
+      "subtitle": "Women's Hormone & Fertility Support",
+      "price": 42.50,
+      "currency": "USD",
+      "url": "/ova-balance.html",
+      "availability": "in_stock"
+    },
+    {
+      "id": "prostabalance",
+      "name": "ProstaBalance™",
+      "subtitle": "Men's Prostate Support",
+      "price": 42.50,
+      "currency": "USD",
+      "url": "/prosta-balance.html",
+      "availability": "in_stock"
+    }
+  ]
+}
