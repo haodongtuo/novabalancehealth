@@ -1,1 +1,444 @@
-{"id":"/index.html","path":"/index.html","sha":"880fd6ce766f2756ac924d37b793caea7c2e58bf","mime_type":"text/html","size":22125,"site_id":"ea1af736-aaab-419e-b769-fa0b55b6f51a","deploy_id":"69be33531e6683cfda762455"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaBalance Health | Advanced Wellness & Support</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "NovaBalance Health LLC",
+      "url": "https://novabalancehealth.com",
+      "description": "NovaBalance Health offers precision nutrition and targeted support formulas for specific physiological needs including women's health, intimate care, hormone support, and men's prostate health.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "url": "https://novabalancehealth.com/contact.html"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "NovaBalance Health Products",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "FemBalance™",
+              "url": "https://novabalancehealth.com/product.html",
+              "offers": {"@type": "Offer", "price": "45.00", "priceCurrency": "USD"}
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "VagiBalance™",
+              "url": "https://novabalancehealth.com/vagi-balance.html",
+              "offers": {"@type": "Offer", "price": "39.99", "priceCurrency": "USD"}
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "OvaBalance™",
+              "url": "https://novabalancehealth.com/ova-balance.html",
+              "offers": {"@type": "Offer", "price": "42.50", "priceCurrency": "USD"}
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "ProstaBalance™",
+              "url": "https://novabalancehealth.com/prosta-balance.html",
+              "offers": {"@type": "Offer", "price": "42.50", "priceCurrency": "USD"}
+            }
+          }
+        ]
+      }
+    }
+    </script>
+    <!-- Using Tailwind for quick medical/clean styling mockup -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Medical Blue & Clean White Palette */
+        :root {
+            --medical-blue: #0A2540;
+            --tech-accent: #00B4D8;
+            --clean-bg: #F8FAFC;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+                <div class="flex items-center">
+                    <!-- Brand Logo -->
+                    <img src="logo.png" alt="NowaBalanceHealth Logo" class="h-12 md:h-16 w-auto object-contain" />
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8 items-center">
+                    <a href="#" class="text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium">Home</a>
+                    <a href="#products" class="text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium">Shop</a>
+                    <a class='text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium' href='/about'>About Us</a>
+                    <a class='text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium' href='/contact'>Contact</a>
+                    <button id="nfc-btn" onclick="scanNFC()" class="flex items-center text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        Verify NFC Tag
+                    </button>
+                    <button onclick="toggleCart()" class="bg-[#00B4D8] text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition">Cart (<span id="cart-count">0</span>)</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative bg-[#0A2540] text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+            <div class="md:w-2/3">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+                    Clinically Inspired.<br> <span class="text-[#00B4D8]">Scientifically Balanced.</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl">
+                    Premium targeted supplements designed for optimal health. Featuring advanced formulations for feminine and masculine wellness.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#products" class="bg-[#00B4D8] hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                        Shop Collection
+                    </a>
+                    <a class='border border-slate-400 hover:border-white text-white font-bold py-3 px-8 rounded-lg transition duration-300' href='/about'>
+                        About Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Highlights -->
+    <section id="products" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-[#0A2540]">Targeted Support Formulas</h2>
+                <p class="mt-4 text-slate-500 max-w-2xl mx-auto">Precision nutrition developed for specific physiological needs.</p>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Product 1 -->
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition duration-300 group flex flex-col">
+                    <div class="h-48 bg-slate-200 rounded-lg mb-4 flex items-center justify-center text-slate-400 group-hover:bg-[#00B4D8]/10 transition">
+                        [Image: VegiBalance Gel]
+                    </div>
+                    <h3 class="text-lg font-bold text-[#0A2540] mb-2">VegiBalance Gel</h3>
+                    <p class="text-sm text-slate-500 mb-2 h-10">Women's Intimate Care Gel</p>
+                    <p class="text-lg font-bold text-[#00B4D8] mb-4">$39.99</p>
+                    <div class="mt-auto flex gap-2">
+                        <button onclick="addToCart('VegiBalance Gel', 39.99)" class="w-full bg-[#00B4D8] text-white font-semibold py-2 rounded hover:bg-blue-600 transition">Buy Now</button>
+                        <a class='w-full text-center border border-[#00B4D8] text-[#00B4D8] font-semibold py-2 rounded hover:bg-[#00B4D8] hover:text-white transition block' href='/vagi-balance'>Details</a>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition duration-300 group flex flex-col">
+                    <div class="h-48 bg-slate-200 rounded-lg mb-4 flex items-center justify-center text-slate-400 group-hover:bg-[#00B4D8]/10 transition">
+                        [Image: FemBalance]
+                    </div>
+                    <h3 class="text-lg font-bold text-[#0A2540] mb-2">FemBalance™</h3>
+                    <p class="text-sm text-slate-500 mb-2 h-10">Intimate & Microbiome Support</p>
+                    <p class="text-lg font-bold text-[#00B4D8] mb-4">$45.00</p>
+                    <div class="mt-auto flex gap-2">
+                        <button onclick="addToCart('FemBalance™', 45.00)" class="w-full bg-[#00B4D8] text-white font-semibold py-2 rounded hover:bg-blue-600 transition">Buy Now</button>
+                        <a class='w-full text-center border border-[#00B4D8] text-[#00B4D8] font-semibold py-2 rounded hover:bg-[#00B4D8] hover:text-white transition block' href='/product'>Details</a>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition duration-300 group flex flex-col">
+                    <div class="h-48 bg-slate-200 rounded-lg mb-4 flex items-center justify-center text-slate-400 group-hover:bg-[#00B4D8]/10 transition">
+                        [Image: OvaBalance]
+                    </div>
+                    <h3 class="text-lg font-bold text-[#0A2540] mb-2">OvaBalance™</h3>
+                    <p class="text-sm text-slate-500 mb-2 h-10">Hormonal Balance Support</p>
+                    <p class="text-lg font-bold text-[#00B4D8] mb-4">$49.99</p>
+                    <div class="mt-auto flex gap-2">
+                        <button onclick="addToCart('OvaBalance™', 49.99)" class="w-full bg-[#00B4D8] text-white font-semibold py-2 rounded hover:bg-blue-600 transition">Buy Now</button>
+                        <a class='w-full text-center border border-[#00B4D8] text-[#00B4D8] font-semibold py-2 rounded hover:bg-[#00B4D8] hover:text-white transition block' href='/ova-balance'>Details</a>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition duration-300 group flex flex-col">
+                    <div class="h-48 bg-slate-200 rounded-lg mb-4 flex items-center justify-center text-slate-400 group-hover:bg-[#00B4D8]/10 transition">
+                        [Image: ProstaBalance]
+                    </div>
+                    <h3 class="text-lg font-bold text-[#0A2540] mb-2">ProstaBalance™</h3>
+                    <p class="text-sm text-slate-500 mb-2 h-10">Men's Prostate Support</p>
+                    <p class="text-lg font-bold text-[#00B4D8] mb-4">$42.50</p>
+                    <div class="mt-auto flex gap-2">
+                        <button onclick="addToCart('ProstaBalance™', 42.50)" class="w-full bg-[#00B4D8] text-white font-semibold py-2 rounded hover:bg-blue-600 transition">Buy Now</button>
+                        <a class='w-full text-center border border-[#00B4D8] text-[#00B4D8] font-semibold py-2 rounded hover:bg-[#00B4D8] hover:text-white transition block' href='/prosta-balance'>Details</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="bg-slate-100 py-12 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-2xl mb-2">🔬</div>
+                    <h4 class="font-bold text-sm text-[#0A2540]">Clinically Studied</h4>
+                </div>
+                <div>
+                    <div class="text-2xl mb-2">🌿</div>
+                    <h4 class="font-bold text-sm text-[#0A2540]">Premium Ingredients</h4>
+                </div>
+                <div>
+                    <div class="text-2xl mb-2">🇺🇸</div>
+                    <h4 class="font-bold text-sm text-[#0A2540]">Made in USA</h4>
+                </div>
+                <div>
+                    <div class="text-2xl mb-2">✅</div>
+                    <h4 class="font-bold text-sm text-[#0A2540]">GMP Certified</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal & Checkout -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[100] flex justify-end">
+        <div class="w-full max-w-md bg-white h-full shadow-xl flex flex-col">
+            <div class="p-6 border-b border-slate-200 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-[#0A2540]">Your Cart</h2>
+                <button onclick="toggleCart()" class="text-slate-500 hover:text-slate-800 text-2xl font-bold">&times;</button>
+            </div>
+            <div id="cart-items" class="p-6 flex-grow overflow-y-auto space-y-4">
+                <p class="text-slate-500 text-center mt-10" id="empty-cart-msg">Your cart is empty.</p>
+            </div>
+            <div class="p-6 border-t border-slate-200 bg-slate-50">
+                <div class="flex justify-between mb-4">
+                    <span class="font-bold text-[#0A2540]">Total:</span>
+                    <span class="font-bold text-[#00B4D8]" id="cart-total">$0.00</span>
+                </div>
+                <!-- Stripe/Payment Integration Mock -->
+                <button onclick="processCheckout()" id="checkout-btn" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    Secure Checkout 🔒
+                </button>
+                <div class="flex justify-center mt-3 gap-2">
+                    <span class="text-xs text-slate-400">Powered by <strong>Stripe</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NFC Toast Notification -->
+    <div id="nfc-toast" class="fixed bottom-5 right-5 bg-[#0A2540] text-white px-6 py-4 rounded-lg shadow-lg transform transition-transform translate-y-24 opacity-0 z-[100] flex items-center gap-3">
+        <span class="text-2xl">📱</span>
+        <div>
+            <h4 class="font-bold">NFC Scanning</h4>
+            <p id="nfc-msg" class="text-sm text-slate-300">Bring tag close to phone...</p>
+        </div>
+    </div>
+
+    <!-- NFC Product Portal Modal (After Scan) -->
+    <div id="nfc-product-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-[150] flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden transform transition-all">
+            <div class="bg-[#0A2540] p-6 text-center relative">
+                <button onclick="closeNfcPortal()" class="absolute top-4 right-4 text-white hover:text-[#00B4D8] text-xl font-bold">&times;</button>
+                <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3 border-4 border-[#0A2540] shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-1">Authentic Product Verified</h2>
+                <p class="text-[#00B4D8] text-sm font-mono bg-white/10 inline-block px-3 py-1 rounded-full" id="nfc-serial">SN: XXXX-XXXX</p>
+            </div>
+            <div class="p-6">
+                <div class="flex gap-4 mb-6 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div class="w-20 h-20 bg-slate-200 rounded-lg flex items-center justify-center text-slate-400 text-xs text-center p-1">
+                        [Product Image]
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <h3 class="text-lg font-bold text-[#0A2540] leading-tight mb-1" id="scanned-product-name">FemBalance™</h3>
+                        <p class="text-xs text-slate-500 mb-2">Intimate & Microbiome Support</p>
+                        <p class="text-[#00B4D8] font-bold" id="scanned-product-price">$45.00</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-600 mb-6 text-center">
+                    Thank you for verifying your NowaBalance product. Based on typical usage, it might be time to restock!
+                </p>
+                <div class="flex gap-3">
+                    <button onclick="repurchaseScanned();" class="flex-1 bg-[#00B4D8] text-white font-bold py-3 rounded-xl hover:bg-blue-600 transition shadow-md flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        Repurchase
+                    </button>
+                    <button onclick="closeNfcPortal()" class="flex-1 border-2 border-slate-200 text-slate-600 font-bold py-3 rounded-xl hover:bg-slate-50 transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal -->
+    <div id="payment-success" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[200] flex items-center justify-center">
+        <div class="bg-white p-8 rounded-xl max-w-sm w-full text-center shadow-2xl">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[#0A2540] mb-2">Payment Successful!</h2>
+            <p class="text-slate-500 mb-6">Thank you for your order. A receipt has been sent to your email.</p>
+            <button onclick="closeSuccess()" class="bg-[#0A2540] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#00B4D8] transition w-full">Continue Shopping</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let cartTotal = 0;
+        
+        // Mock data for currently scanned product
+        let currentScannedProduct = {
+            name: 'FemBalance™',
+            price: 45.00
+        };
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        function updateCartUI() {
+            const countEl = document.getElementById('cart-count');
+            const itemsEl = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            countEl.innerText = cart.length;
+            
+            if (cart.length > 0) {
+                emptyMsg.style.display = 'none';
+                checkoutBtn.disabled = false;
+                
+                itemsEl.innerHTML = cart.map((item, index) => `
+                    <div class="flex justify-between items-center bg-white p-3 rounded border border-slate-100 shadow-sm">
+                        <span class="font-medium text-[#0A2540]">${item.name}</span>
+                        <div class="flex items-center gap-3">
+                            <span class="text-[#00B4D8] font-bold">$${item.price.toFixed(2)}</span>
+                            <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-600">&times;</button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
+                totalEl.innerText = `$${cartTotal.toFixed(2)}`;
+            } else {
+                emptyMsg.style.display = 'block';
+                itemsEl.innerHTML = '';
+                itemsEl.appendChild(emptyMsg);
+                totalEl.innerText = '$0.00';
+                checkoutBtn.disabled = true;
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCart(forceOpen = false) {
+            const modal = document.getElementById('cart-modal');
+            if (forceOpen) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.toggle('hidden');
+            }
+        }
+
+        function processCheckout() {
+            const btn = document.getElementById('checkout-btn');
+            btn.innerHTML = 'Processing... <span class="animate-spin inline-block ml-2">↻</span>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                toggleCart();
+                document.getElementById('payment-success').classList.remove('hidden');
+                cart = [];
+                updateCartUI();
+                btn.innerHTML = 'Secure Checkout 🔒';
+            }, 1500);
+        }
+
+        function closeSuccess() {
+            document.getElementById('payment-success').classList.add('hidden');
+        }
+
+        function closeNfcPortal() {
+            document.getElementById('nfc-product-modal').classList.add('hidden');
+        }
+
+        function repurchaseScanned() {
+            closeNfcPortal();
+            addToCart(currentScannedProduct.name, currentScannedProduct.price);
+        }
+
+        // Web NFC API Integration
+        async function scanNFC() {
+            const toast = document.getElementById('nfc-toast');
+            const msg = document.getElementById('nfc-msg');
+            
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            msg.innerText = "Bring tag close to phone...";
+
+            try {
+                if ('NDEFReader' in window) {
+                    const ndef = new NDEFReader();
+                    await ndef.scan();
+                    msg.innerText = "Scanning... hold near product tag.";
+                    
+                    ndef.addEventListener("reading", ({ message, serialNumber }) => {
+                        // 1. Show quick success toast
+                        msg.innerHTML = `<span class="text-green-400">✓ Authentic NowaBalance Product!</span>`;
+                        
+                        // 2. Hide toast and pop up the Product Portal for repurchase/details
+                        setTimeout(() => {
+                            toast.classList.add('translate-y-24', 'opacity-0');
+                            
+                            // Update modal with the scanned SN (if available)
+                            const snDisplay = serialNumber ? serialNumber : 'NB-' + Math.floor(1000000 + Math.random() * 9000000);
+                            document.getElementById('nfc-serial').innerText = `SN: ${snDisplay}`;
+                            
+                            // Show the portal
+                            document.getElementById('nfc-product-modal').classList.remove('hidden');
+                        }, 1200);
+                    });
+
+                    ndef.addEventListener("readingerror", () => {
+                        msg.innerHTML = `<span class="text-red-400">✗ Error reading tag. Try again.</span>`;
+                        setTimeout(() => {
+                            toast.classList.add('translate-y-24', 'opacity-0');
+                        }, 3000);
+                    });
+                } else {
+                    msg.innerHTML = `<span class="text-yellow-400">NFC not supported on this device/browser.</span>`;
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-24', 'opacity-0');
+                    }, 3000);
+                }
+            } catch (error) {
+                msg.innerHTML = `<span class="text-red-400">✗ Scan failed: ${error.message}</span>`;
+                setTimeout(() => {
+                    toast.classList.add('translate-y-24', 'opacity-0');
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>

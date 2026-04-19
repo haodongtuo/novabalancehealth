@@ -1,1 +1,371 @@
-{"id":"/verify.html","path":"/verify.html","sha":"219830a880f3402edb2529d289b2b8f75703aba4","mime_type":"text/html","size":21512,"site_id":"ea1af736-aaab-419e-b769-fa0b55b6f51a","deploy_id":"69be33531e6683cfda762455"}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC Verification | NovaBalance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --medical-blue: #0A2540; --tech-accent: #00B4D8; }
+        .success-anim { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        .warning-anim { animation: pulseWarning 2s infinite; }
+        @keyframes pulseWarning {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Top Logo -->
+    <div class="mb-8">
+        <a href="/">
+            <img src="/logo.png" alt="NovaBalance Logo" class="h-16 md:h-20 w-auto object-contain mx-auto" onerror="this.src='https://via.placeholder.com/200x80?text=NovaBalance'" />
+        </a>
+    </div>
+
+    <!-- Verification Card -->
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-100 relative">
+        
+        <!-- Translate Button -->
+        <button id="lang-toggle" onclick="toggleLanguage()" class="absolute top-4 right-4 z-20 text-[10px] sm:text-xs bg-white/10 hover:bg-white/20 text-white/80 hover:text-white px-2 py-1 rounded border border-white/20 transition-colors backdrop-blur-md hidden shadow-sm">
+            翻译成中文
+        </button>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="p-12 text-center">
+            <div class="inline-block animate-spin w-12 h-12 border-4 border-[#00B4D8] border-t-transparent rounded-full mb-4"></div>
+            <h2 class="text-xl font-bold text-[#0A2540]" id="text-verifying">Verifying NFC Tag...</h2>
+            <p class="text-slate-500 mt-2" id="text-checking">Checking database records securely.</p>
+        </div>
+
+        <!-- Result State (Hidden initially) -->
+        <div id="result-state" class="hidden">
+            <!-- Header (Green for Success, Red for Fake/Warning) -->
+            <div id="status-header" class="bg-[#0A2540] p-6 text-center relative overflow-hidden transition-colors duration-500">
+                <div id="status-icon-bg" class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-[#0A2540] shadow-lg success-anim z-10 relative">
+                    <svg id="status-icon" class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-1" id="status-title">Authentic Product</h2>
+                <div class="inline-block bg-white/10 px-4 py-1 rounded-full mt-2">
+                    <span class="text-[#00B4D8] font-mono text-sm" id="display-uid">UID: Checking...</span>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <!-- Warning Message Box (Hidden by default) -->
+                <div id="warning-msg" class="hidden mb-6 bg-red-50 text-red-700 p-4 rounded-xl border border-red-200 text-sm">
+                    <strong>Warning:</strong> This tag could not be verified in our authentic database. Please do not consume.
+                </div>
+
+                <!-- Product Info -->
+                <div id="product-card" class="flex gap-4 mb-6 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div class="w-24 h-24 bg-white border border-slate-200 rounded-lg flex flex-col items-center justify-center text-slate-400 text-xs text-center p-1 shadow-sm overflow-hidden">
+                        <span id="product-image" class="text-3xl">🛡️</span>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <span class="text-xs font-bold text-[#00B4D8] uppercase tracking-wider mb-1" id="product-category">NovaBalance</span>
+                        <h3 class="text-lg font-bold text-[#0A2540] leading-tight mb-1" id="product-name">Product Name</h3>
+                        <p class="text-[10px] text-slate-500 mb-1" id="product-batch">Batch: XXXX</p>
+                        <p class="text-[10px] text-slate-400 font-mono flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            <span id="text-scanned">Scanned</span>&nbsp;<span id="scan-count" class="font-bold text-[#00B4D8]">1</span>&nbsp;<span id="text-times">times</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Utilities: Calendar & Email -->
+                <div id="utilities-section" class="mb-6 space-y-4">
+                    <!-- Add to Calendar -->
+                    <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100 flex items-center justify-between gap-4">
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-[#0A2540] mb-0.5" id="text-reminder-title">Set Daily Reminder</h4>
+                            <p class="text-xs text-slate-500" id="text-reminder-desc">Never miss a dose. Add to your phone's calendar.</p>
+                        </div>
+                        <button onclick="downloadICS()" class="shrink-0 bg-white border border-blue-200 text-[#00B4D8] hover:bg-blue-50 font-bold py-2 px-3 rounded-lg text-xs transition shadow-sm flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            <span id="text-add-cal">Add</span>
+                        </button>
+                    </div>
+
+                    <!-- Email Collection -->
+                    <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+                        <h4 class="text-sm font-bold text-amber-900 mb-1" id="text-discount-title">Want 15% off your next refill?</h4>
+                        <p class="text-xs text-amber-700/80 mb-3" id="text-discount-desc">Enter your email to get a discount code and health tips.</p>
+                        <div class="flex gap-2">
+                            <input type="email" id="user-email" placeholder="Your email address" class="flex-1 text-sm px-3 py-2 rounded-lg border border-amber-200 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400">
+                            <button onclick="subscribeEmail()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition shadow-sm" id="text-subscribe">Get Code</button>
+                        </div>
+                        <p id="subscribe-msg" class="text-xs text-green-600 mt-2 hidden font-medium">✨ Check your inbox shortly!</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <a id="shop-link" href="/" class="w-full bg-[#00B4D8] text-white font-bold py-3.5 rounded-xl hover:bg-blue-600 transition shadow-md flex items-center justify-center gap-2 text-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <span id="text-shop-btn">Shop Again</span>
+                    </a>
+                    <a href="/" class="w-full block text-center text-slate-400 hover:text-slate-600 text-sm mt-4" id="text-return">
+                        Return to Storefront
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'en';
+        let currentScanCount = 0;
+        let isAuthenticData = true;
+
+        const translations = {
+            en: {
+                toggleBtn: "翻译成中文",
+                verifying: "Verifying NFC Tag...",
+                checking: "Checking database records securely.",
+                authentic: "Authentic Product",
+                failed: "Authentication Failed",
+                uidPrefix: "UID: ",
+                batchPrefix: "Batch: ",
+                scanned: "Scanned",
+                times: "times",
+                shopAgain: "Shop Again",
+                returnStore: "Return to Storefront",
+                warningFake: "<strong>Warning:</strong> This tag could not be verified in our authentic database. Please do not consume.",
+                warningMulti: "<strong>Notice:</strong> This authentic tag has been scanned multiple times. If this is a new purchase, please contact support.",
+                errorMsg: "<strong>Error:</strong> Please check your internet and try again.",
+                missingMsg: "<strong>Missing Tag ID:</strong> Please scan the NFC tag again.",
+                reminderTitle: "Set Daily Reminder",
+                reminderDesc: "Never miss a dose. Add to your phone's calendar.",
+                addCal: "Add",
+                discountTitle: "Want 15% off your next refill?",
+                discountDesc: "Enter your email to get a discount code and health tips.",
+                emailPlaceholder: "Your email address",
+                subscribe: "Get Code",
+                subSuccess: "✨ Check your inbox shortly!"
+            },
+            zh: {
+                toggleBtn: "Translate to English",
+                verifying: "正在验证 NFC 标签...",
+                checking: "正在安全查询数据库记录...",
+                authentic: "正品认证成功",
+                failed: "防伪认证失败",
+                uidPrefix: "防伪码: ",
+                batchPrefix: "生产批次: ",
+                scanned: "该码已被查询",
+                times: "次",
+                shopAgain: "再次购买",
+                returnStore: "返回首页",
+                warningFake: "<strong>警告：</strong>此防伪码在我们的正品数据库中未找到，请谨防假冒伪劣产品。",
+                warningMulti: "<strong>注意：</strong>此正品防伪码已被多次扫码验证。如果这是您首次购买该产品，请联系客服查验。",
+                errorMsg: "<strong>网络错误：</strong>请检查您的网络连接并重试。",
+                missingMsg: "<strong>未检测到芯片：</strong>请重新用手机碰触 NFC 标签。",
+                reminderTitle: "设置每日服药提醒",
+                reminderDesc: "添加到手机日历，告别漏服烦恼。",
+                addCal: "添加",
+                discountTitle: "获取复购 85 折优惠！",
+                discountDesc: "输入邮箱领取优惠码，并获取最新健康资讯。",
+                emailPlaceholder: "请输入邮箱地址",
+                subscribe: "领取优惠",
+                subSuccess: "✨ 优惠码稍后将发送至您的邮箱！"
+            }
+        };
+
+        const productDictionary = {
+            'nb-vb-3ml-gel': {
+                name: { en: 'VagiBalance™ Gel (3ml)', zh: 'VagiBalance™ 女性私护凝胶 (3ml)' },
+                category: { en: 'Feminine Care', zh: '女性私护' },
+                img: '🌸',
+                link: '/vagi-balance.html'
+            },
+            'nb-pb-60-tab': {
+                name: { en: 'ProstaBalance™ (60 Tablets)', zh: 'ProstaBalance™ 前列腺养护 (60片)' },
+                category: { en: 'Men\'s Health', zh: '男性健康' },
+                img: '🛡️',
+                link: '/prosta-balance.html'
+            }
+        };
+
+        let currentProductCode = null;
+        let currentWarningType = null; // 'fake', 'multi', 'error', 'missing'
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            applyTranslations();
+        }
+
+        function applyTranslations() {
+            const t = translations[currentLang];
+            
+            document.getElementById('lang-toggle').innerText = t.toggleBtn;
+            document.getElementById('text-verifying').innerText = t.verifying;
+            document.getElementById('text-checking').innerText = t.checking;
+            document.getElementById('status-title').innerText = isAuthenticData ? t.authentic : t.failed;
+            
+            let uidText = document.getElementById('display-uid').innerText;
+            let uidValue = uidText.split(': ')[1] || 'Checking...';
+            document.getElementById('display-uid').innerText = t.uidPrefix + uidValue;
+
+            document.getElementById('text-scanned').innerText = t.scanned;
+            document.getElementById('text-times').innerText = t.times;
+            document.getElementById('text-shop-btn').innerText = t.shopAgain;
+            document.getElementById('text-return').innerText = t.returnStore;
+
+            if(document.getElementById('text-reminder-title')) {
+                document.getElementById('text-reminder-title').innerText = t.reminderTitle;
+                document.getElementById('text-reminder-desc').innerText = t.reminderDesc;
+                document.getElementById('text-add-cal').innerText = t.addCal;
+                document.getElementById('text-discount-title').innerText = t.discountTitle;
+                document.getElementById('text-discount-desc').innerText = t.discountDesc;
+                document.getElementById('user-email').placeholder = t.emailPlaceholder;
+                document.getElementById('text-subscribe').innerText = t.subscribe;
+                document.getElementById('subscribe-msg').innerText = t.subSuccess;
+            }
+
+
+            // Product specific texts
+            if (currentProductCode && productDictionary[currentProductCode]) {
+                const dict = productDictionary[currentProductCode];
+                document.getElementById('product-name').innerText = dict.name[currentLang];
+                document.getElementById('product-category').innerText = dict.category[currentLang];
+                
+                let batchText = document.getElementById('product-batch').innerText;
+                let batchValue = batchText.split(': ')[1] || 'N/A';
+                document.getElementById('product-batch').innerText = t.batchPrefix + batchValue;
+            }
+
+            // Warnings
+            if (currentWarningType === 'fake') {
+                document.getElementById('warning-msg').innerHTML = t.warningFake;
+            } else if (currentWarningType === 'multi') {
+                document.getElementById('warning-msg').innerHTML = t.warningMulti;
+            } else if (currentWarningType === 'error') {
+                document.getElementById('warning-msg').innerHTML = t.errorMsg;
+            } else if (currentWarningType === 'missing') {
+                document.getElementById('warning-msg').innerHTML = t.missingMsg;
+            }
+        }
+
+        async function verifyNFC() {
+            try {
+                let uid = new URLSearchParams(window.location.search).get('uid');
+                if (!uid) {
+                    const parts = window.location.pathname.split('/').filter(p => p.trim() !== '');
+                    uid = parts[parts.length - 1]; 
+                }
+
+                if (!uid || uid === 'verify.html') {
+                    currentWarningType = 'missing';
+                    showFake("Missing Tag ID");
+                    return;
+                }
+
+                document.getElementById('display-uid').innerText = 'UID: ' + uid;
+
+                // Call Backend API
+                const res = await fetch(`/.netlify/functions/verify_nfc?uid=${encodeURIComponent(uid)}`);
+                const data = await res.json();
+
+                // Show language toggle once checking is done
+                document.getElementById('lang-toggle').classList.remove('hidden');
+
+                if (!res.ok || !data.authentic) {
+                    currentWarningType = 'fake';
+                    showFake(uid);
+                } else {
+                    showAuthentic(uid, data);
+                }
+            } catch (err) {
+                console.error(err);
+                currentWarningType = 'error';
+                document.getElementById('lang-toggle').classList.remove('hidden');
+                showFake("Connection Error");
+            }
+        }
+
+        function showAuthentic(uid, data) {
+            isAuthenticData = true;
+            currentProductCode = data.product_name;
+            currentScanCount = data.scan_count;
+
+            const dict = productDictionary[currentProductCode] || { 
+                name: { en: data.product_name, zh: data.product_name }, 
+                category: { en: 'NovaBalance', zh: 'NovaBalance' }, 
+                img: '✨',
+                link: '/'
+            };
+
+            document.getElementById('product-batch').innerText = 'Batch: ' + (data.batch_number || 'N/A');
+            document.getElementById('product-image').innerText = dict.img;
+            document.getElementById('scan-count').innerText = currentScanCount;
+            document.getElementById('shop-link').href = dict.link;
+
+            if (currentScanCount > 10) {
+                currentWarningType = 'multi';
+                document.getElementById('warning-msg').classList.remove('hidden');
+                document.getElementById('warning-msg').className = "mb-6 bg-yellow-50 text-yellow-700 p-4 rounded-xl border border-yellow-200 text-sm";
+            }
+
+            applyTranslations(); // Apply UI text
+
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('result-state').classList.remove('hidden');
+        }
+
+        function showFake(uid) {
+            isAuthenticData = false;
+            document.getElementById('status-header').classList.remove('bg-[#0A2540]');
+            document.getElementById('status-header').classList.add('bg-red-600');
+            
+            const iconBg = document.getElementById('status-icon-bg');
+            iconBg.classList.remove('bg-green-500', 'border-[#0A2540]', 'success-anim');
+            iconBg.classList.add('bg-red-500', 'border-red-600', 'warning-anim');
+
+            document.getElementById('status-icon').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>';
+            document.getElementById('display-uid').classList.replace('text-[#00B4D8]', 'text-red-200');
+
+            document.getElementById('warning-msg').classList.remove('hidden');
+            document.getElementById('warning-msg').className = "mb-6 bg-red-50 text-red-700 p-4 rounded-xl border border-red-200 text-sm";
+            document.getElementById('product-card').classList.add('hidden');
+            if(document.getElementById('utilities-section')) document.getElementById('utilities-section').classList.add('hidden');
+
+
+            applyTranslations(); // Apply UI text
+
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('result-state').classList.remove('hidden');
+        }
+
+        function downloadICS() {
+            const prodName = document.getElementById('product-name').innerText;
+            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//NovaBalance//Reminder//EN\nBEGIN:VEVENT\nSUMMARY:Take ${prodName}\nDESCRIPTION:Daily reminder to take your NovaBalance supplement.\nRRULE:FREQ=DAILY\nBEGIN:VALARM\nTRIGGER:-PT0M\nACTION:DISPLAY\nDESCRIPTION:Reminder\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR`;
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'novabalance_reminder.ics';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function subscribeEmail() {
+            const email = document.getElementById('user-email').value;
+            if (email && email.includes('@')) {
+                document.getElementById('subscribe-msg').classList.remove('hidden');
+                document.getElementById('user-email').value = '';
+                setTimeout(() => {
+                    document.getElementById('subscribe-msg').classList.add('hidden');
+                }, 4000);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', verifyNFC);
+    </script>
+</body>
+</html>

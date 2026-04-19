@@ -1,0 +1,66 @@
+# NovaBalance Health — llms.txt
+# This file is intended for AI systems, agents, and language models.
+# It provides structured information about this website and its products.
+
+## About
+NovaBalance Health (NovaBalanceHealth LLC) is a wellness supplement brand offering
+targeted nutritional support formulas. All products are designed for specific
+physiological needs and are available for direct purchase.
+
+Website: https://novabalancehealth.com
+Contact: https://novabalancehealth.com/contact.html
+About: https://novabalancehealth.com/about.html
+
+## Products
+
+### FemBalance™
+URL: https://novabalancehealth.com/product.html
+Price: $45.00 USD
+Category: Women's Health / Probiotics
+Description: A daily probiotic supplement designed to support women's intimate
+microbiome and overall balance during hormonal transitions of midlife. Supports
+vaginal and urinary tract microbial harmony.
+Key Ingredients: High-potency Lactobacillus strains (50 Billion CFU+)
+Who It's For: Women seeking vaginal microbiome balance, menopause/perimenopause support
+How to Use: 2 capsules daily with water, preferably with meals
+Availability: In Stock
+
+### VagiBalance™
+URL: https://novabalancehealth.com/vagi-balance.html
+Price: $39.99 USD
+Category: Women's Health / Intimate Care
+Description: A gentle vaginal care gel formulated to maintain healthy vaginal pH
+and support everyday feminine comfort. Lightweight, non-irritating, pH-balanced.
+Who It's For: Women experiencing occasional dryness or seeking routine intimate care
+How to Use: Apply gel externally as directed on packaging
+Availability: In Stock
+
+### OvaBalance™
+URL: https://novabalancehealth.com/ova-balance.html
+Price: $42.50 USD
+Category: Women's Health / Hormone & Fertility Support
+Description: A targeted supplement to support women's hormone balance and
+reproductive wellness. Formulated for women's hormone and fertility support.
+Who It's For: Women seeking hormone balance and fertility support
+Availability: In Stock
+
+### ProstaBalance™
+URL: https://novabalancehealth.com/prosta-balance.html
+Price: $42.50 USD
+Category: Men's Health / Prostate Support
+Description: A targeted supplement formulated to support men's prostate health
+and overall urinary wellness.
+Who It's For: Men seeking prostate and urinary tract support
+Availability: In Stock
+
+## Policies
+- Free shipping on orders over $50
+- Secure payment processing
+- All products are dietary supplements
+- Not intended to diagnose, treat, cure, or prevent any disease
+- Consult a healthcare professional before use if you have medical conditions
+
+## AI Agent Notes
+- This site supports direct product browsing without account registration
+- Product pages contain full ingredient and usage information
+- All prices are in USD
