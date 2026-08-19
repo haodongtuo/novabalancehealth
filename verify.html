@@ -1,9 +1,16 @@
-<!DOCTYPE html>
+﻿﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFC Verification | NovaBalance</title>
+    <title>NOVA</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0A2540">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="NOVA">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --medical-blue: #0A2540; --tech-accent: #00B4D8; }
@@ -24,10 +31,31 @@
 <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col items-center justify-center p-4">
 
     <!-- Top Logo -->
-    <div class="mb-8">
+    <div class="mb-8 text-center">
         <a href="/">
             <img src="/logo.png" alt="NovaBalance Logo" class="h-16 md:h-20 w-auto object-contain mx-auto" onerror="this.src='https://via.placeholder.com/200x80?text=NovaBalance'" />
         </a>
+        <!-- PWA Install Banner -->
+        <div id="install-banner" class="hidden mt-4 bg-[#0A2540] border border-[#00B4D8]/40 rounded-2xl px-5 py-4 max-w-xs mx-auto text-center shadow-xl">
+            <p id="text-banner-title" class="text-[#00B4D8] text-xs font-semibold mb-3">📲 Save this app to your phone</p>
+            <!-- Android/Desktop: native install button (shown when browser supports it) -->
+            <button id="install-btn" onclick="installApp()" class="hidden w-full inline-flex items-center justify-center gap-2 bg-[#00B4D8] hover:bg-[#0096b5] text-white text-sm font-bold px-4 py-2.5 rounded-full transition-all duration-200 active:scale-95 mb-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg>
+                <span id="text-banner-install-btn">Add to Home Screen</span>
+            </button>
+            <!-- iOS Safari step-by-step -->
+            <div id="ios-steps" class="hidden text-left space-y-2 mb-3">
+                <p id="text-ios-step1" class="text-white text-xs">1. Tap the <strong class="text-[#00B4D8]">Share</strong> button <span class="text-base">⬆️</span> at the bottom of Safari</p>
+                <p id="text-ios-step2" class="text-white text-xs">2. Scroll down → tap <strong class="text-[#00B4D8]">"Add to Home Screen"</strong></p>
+                <p id="text-ios-step3" class="text-white text-xs">3. Tap <strong class="text-[#00B4D8]">Add</strong> in the top right ✓</p>
+            </div>
+            <!-- Generic fallback (Android/other) -->
+            <div id="generic-steps" class="hidden text-white text-xs mb-3 space-y-1">
+                <p id="text-generic-step1">Tap <strong class="text-[#00B4D8]">⋮ Menu</strong> in your browser</p>
+                <p id="text-generic-step2">then tap <strong class="text-[#00B4D8]">"Add to Home Screen"</strong></p>
+            </div>
+            <button onclick="document.getElementById('install-banner').classList.add('hidden')" class="text-slate-500 text-xs hover:text-slate-400 mt-1" id="text-banner-dismiss">✕ Dismiss</button>
+        </div>
     </div>
 
     <!-- Verification Card -->
@@ -111,9 +139,6 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         <span id="text-shop-btn">Shop Again</span>
                     </a>
-                    <a href="/" class="w-full block text-center text-slate-400 hover:text-slate-600 text-sm mt-4" id="text-return">
-                        Return to Storefront
-                    </a>
                 </div>
             </div>
         </div>
@@ -148,7 +173,15 @@
                 discountDesc: "Enter your email to get a discount code and health tips.",
                 emailPlaceholder: "Your email address",
                 subscribe: "Get Code",
-                subSuccess: "✨ Check your inbox shortly!"
+                subSuccess: "✨ Check your inbox shortly!",
+                bannerTitle: "📲 Save this app to your phone",
+                bannerInstallBtn: "Add to Home Screen",
+                iosStep1: '1. Tap the <strong class="text-[#00B4D8]">Share</strong> button <span class="text-base">⬆️</span> at the bottom of Safari',
+                iosStep2: '2. Scroll down → tap <strong class="text-[#00B4D8]">"Add to Home Screen"</strong>',
+                iosStep3: '3. Tap <strong class="text-[#00B4D8]">Add</strong> in the top right ✓',
+                genericStep1: 'Tap <strong class="text-[#00B4D8]">⋮ Menu</strong> in your browser',
+                genericStep2: 'then tap <strong class="text-[#00B4D8]">"Add to Home Screen"</strong>',
+                bannerDismiss: "✕ Dismiss"
             },
             zh: {
                 toggleBtn: "Translate to English",
@@ -173,7 +206,15 @@
                 discountDesc: "输入邮箱领取优惠码，并获取最新健康资讯。",
                 emailPlaceholder: "请输入邮箱地址",
                 subscribe: "领取优惠",
-                subSuccess: "✨ 优惠码稍后将发送至您的邮箱！"
+                subSuccess: "✨ 优惠码稍后将发送至您的邮箱！",
+                bannerTitle: "📲 添加到手机桌面",
+                bannerInstallBtn: "添加到主屏幕",
+                iosStep1: '1. 点击 Safari 底部的 <strong class="text-[#00B4D8]">分享</strong> 按钮 <span class="text-base">⬆️</span>',
+                iosStep2: '2. 下滑找到 <strong class="text-[#00B4D8]">"添加到主屏幕"</strong> 并点击',
+                iosStep3: '3. 右上角点击 <strong class="text-[#00B4D8]">添加</strong> 即可 ✓',
+                genericStep1: '点击浏览器右上角 <strong class="text-[#00B4D8]">⋮ 菜单</strong>',
+                genericStep2: '然后点击 <strong class="text-[#00B4D8]">"添加到主屏幕"</strong>',
+                bannerDismiss: "✕ 关闭"
             }
         };
 
@@ -215,7 +256,27 @@
             document.getElementById('text-scanned').innerText = t.scanned;
             document.getElementById('text-times').innerText = t.times;
             document.getElementById('text-shop-btn').innerText = t.shopAgain;
-            document.getElementById('text-return').innerText = t.returnStore;
+            var retEl = document.getElementById('text-return'); if(retEl) retEl.innerText = t.returnStore;
+
+            // Install banner translations
+            var bannerTitleEl = document.getElementById('text-banner-title');
+            if (bannerTitleEl) {
+                bannerTitleEl.innerHTML = t.bannerTitle;
+                var installBtnEl = document.getElementById('text-banner-install-btn');
+                if (installBtnEl) installBtnEl.innerText = t.bannerInstallBtn;
+                var ios1 = document.getElementById('text-ios-step1');
+                if (ios1) ios1.innerHTML = t.iosStep1;
+                var ios2 = document.getElementById('text-ios-step2');
+                if (ios2) ios2.innerHTML = t.iosStep2;
+                var ios3 = document.getElementById('text-ios-step3');
+                if (ios3) ios3.innerHTML = t.iosStep3;
+                var gen1 = document.getElementById('text-generic-step1');
+                if (gen1) gen1.innerHTML = t.genericStep1;
+                var gen2 = document.getElementById('text-generic-step2');
+                if (gen2) gen2.innerHTML = t.genericStep2;
+                var dismissEl = document.getElementById('text-banner-dismiss');
+                if (dismissEl) dismissEl.innerText = t.bannerDismiss;
+            }
 
             if(document.getElementById('text-reminder-title')) {
                 document.getElementById('text-reminder-title').innerText = t.reminderTitle;
@@ -343,18 +404,37 @@
         }
 
         function downloadICS() {
-            const prodName = document.getElementById('product-name').innerText;
-            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//NovaBalance//Reminder//EN\nBEGIN:VEVENT\nSUMMARY:Take ${prodName}\nDESCRIPTION:Daily reminder to take your NovaBalance supplement.\nRRULE:FREQ=DAILY\nBEGIN:VALARM\nTRIGGER:-PT0M\nACTION:DISPLAY\nDESCRIPTION:Reminder\nEND:VALARM\nEND:VEVENT\nEND:VCALENDAR`;
-            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
+            var prodName = document.getElementById('product-name') ? document.getElementById('product-name').innerText : 'NovaBalance Supplement';
+            var now = new Date();
+            var pad = function(n){ return String(n).padStart(2,'0'); };
+            var dtstart = now.getFullYear() + pad(now.getMonth()+1) + pad(now.getDate()) + 'T' + pad(now.getHours()) + pad(now.getMinutes()) + '00';
+            var icsLines = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//NovaBalance//Reminder//EN',
+                'BEGIN:VEVENT',
+                'SUMMARY:Take ' + prodName,
+                'DESCRIPTION:Daily reminder to take your NovaBalance supplement.',
+                'DTSTART:' + dtstart,
+                'RRULE:FREQ=DAILY',
+                'BEGIN:VALARM',
+                'TRIGGER:-PT0M',
+                'ACTION:DISPLAY',
+                'DESCRIPTION:Reminder',
+                'END:VALARM',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n');
+            var encoded = encodeURIComponent(icsLines);
+            var link = document.createElement('a');
+            link.href = 'data:text/calendar;charset=utf-8,' + encoded;
             link.download = 'novabalance_reminder.ics';
+            link.setAttribute('target', '_blank');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
-
-        function subscribeEmail() {
+function subscribeEmail() {
             const email = document.getElementById('user-email').value;
             if (email && email.includes('@')) {
                 document.getElementById('subscribe-msg').classList.remove('hidden');
@@ -366,6 +446,56 @@
         }
 
         window.addEventListener('DOMContentLoaded', verifyNFC);
+
+        // ── PWA Install Logic ──────────────────────────────────────
+        let deferredPrompt = null;
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(console.error);
+        }
+
+        const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        const isAndroid = /android/i.test(navigator.userAgent);
+        const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+        // Don't show banner if already installed as app
+        if (!isInStandaloneMode) {
+            const banner = document.getElementById('install-banner');
+            banner.classList.remove('hidden');
+
+            if (isIOS) {
+                // iOS Safari: show step-by-step guide always
+                document.getElementById('ios-steps').classList.remove('hidden');
+            } else {
+                // Android/Desktop: show generic steps first, replace with button if event fires
+                document.getElementById('generic-steps').classList.remove('hidden');
+            }
+        }
+
+        // Chrome/Android: capture native install prompt (may fire, may not)
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Replace generic steps with real install button
+            document.getElementById('generic-steps').classList.add('hidden');
+            document.getElementById('install-btn').classList.remove('hidden');
+        });
+
+        // Hide banner after install
+        window.addEventListener('appinstalled', () => {
+            document.getElementById('install-banner').classList.add('hidden');
+            deferredPrompt = null;
+        });
+
+        function installApp() {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => {
+                deferredPrompt = null;
+                document.getElementById('install-banner').classList.add('hidden');
+            });
+        }
     </script>
 </body>
 </html>

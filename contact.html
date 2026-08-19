@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,15 +21,15 @@
             <div class="flex justify-between h-16 md:h-20 items-center">
                 <div class="flex items-center">
                     <a href='/'>
-                        <img src="logo.png" alt="NowaBalanceHealth Logo" class="h-12 md:h-16 w-auto object-contain" />
+                        <img src="/logo.png" alt="NowaBalanceHealth Logo" class="h-12 md:h-16 w-auto object-contain" />
                     </a>
                 </div>
                 <div class="hidden sm:ml-6 sm:flex sm:space-x-8 items-center">
-                    <a class='text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium' href='/'>Home</a>
-                    <a class='text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium' href='/#products'>Shop</a>
+                    <a class='hidden' href='/'>Home</a>
+                    <a class='hidden' href='/#products'>Shop</a>
                     <a class='text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium' href='/about'>About Us</a>
                     <a class='text-[#00B4D8] px-3 py-2 text-sm font-medium border-b-2 border-[#00B4D8]' href='/contact'>Contact</a>
-                    <button class="bg-[#00B4D8] text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition" onclick="alert('Cart system demo: go back to home page to purchase.')">Cart</button>
+                    <button class="bg-[#00B4D8] text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition" onclick="toggleCart()">Cart</button>
                 </div>
             </div>
         </div>
@@ -126,5 +126,123 @@
         </div>
     </footer>
 
-</body>
-</html>
+
+<div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[100] flex justify-end">
+        <div class="w-full max-w-md bg-white h-full shadow-xl flex flex-col">
+            <div class="p-6 border-b border-slate-200 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-[#0A2540]">Your Cart</h2>
+                <button onclick="toggleCart()" class="text-slate-500 hover:text-slate-800 text-2xl font-bold">&times;</button>
+            </div>
+            <div id="cart-items" class="p-6 flex-grow overflow-y-auto space-y-4">
+                <p class="text-slate-500 text-center mt-10" id="empty-cart-msg">Your cart is empty.</p>
+            </div>
+            <div class="p-6 border-t border-slate-200 bg-slate-50">
+                <div class="flex justify-between mb-4">
+                    <span class="font-bold text-[#0A2540]">Total:</span>
+                    <span class="font-bold text-[#00B4D8]" id="cart-total">$0.00</span>
+                </div>
+                <!-- Stripe/Payment Integration Mock -->
+                <button onclick="processCheckout()" id="checkout-btn" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    Secure Checkout 🔒
+                </button>
+                <div class="flex justify-center mt-3 gap-2">
+                    <span class="text-xs text-slate-400">Powered by <strong>Stripe</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div id="payment-success" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[200] flex items-center justify-center">
+        <div class="bg-white p-8 rounded-xl max-w-sm w-full text-center shadow-2xl">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[#0A2540] mb-2">Payment Successful!</h2>
+            <p class="text-slate-500 mb-6">Thank you for your order. A receipt has been sent to your email.</p>
+            <button onclick="closeSuccess()" class="bg-[#0A2540] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#00B4D8] transition w-full">Continue Shopping</button>
+        </div>
+    </div>
+
+<script>
+let cart = [];
+        let cartTotal = 0;
+        
+        // Mock data for currently scanned product
+        let currentScannedProduct = {
+            name: 'FemBalance™',
+            price: 45.00
+        };
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+            toggleCart(true);
+        }
+
+        function updateCartUI() {
+            var countEl = document.getElementById('cart-count');
+            var itemsEl = document.getElementById('cart-items');
+            var totalEl = document.getElementById('cart-total');
+            var checkoutBtn = document.getElementById('checkout-btn');
+            if (countEl) countEl.innerText = cart.length;
+            if (cart.length > 0) {
+                if (checkoutBtn) checkoutBtn.disabled = false;
+                var html = '';
+                for (var i = 0; i < cart.length; i++) {
+                    html += '<div class="flex justify-between items-center bg-white p-3 rounded border border-slate-100 shadow-sm mb-2">';
+                    html += '<span class="font-medium text-[#0A2540]">' + cart[i].name + '</span>';
+                    html += '<div class="flex items-center gap-3"><span class="text-[#00B4D8] font-bold">$' + cart[i].price.toFixed(2) + '</span>';
+                    html += '<button onclick="removeFromCart(' + i + ')" class="text-red-400 hover:text-red-600 text-xl font-bold px-2">&times;</button>';
+                    html += '</div></div>';
+                }
+                itemsEl.innerHTML = html;
+                var total = cart.reduce(function(s,x){return s+x.price;},0);
+                if (totalEl) totalEl.innerText = '$' + total.toFixed(2);
+            } else {
+                if (checkoutBtn) checkoutBtn.disabled = true;
+                itemsEl.innerHTML = '<p class="text-slate-500 text-center mt-10">Your cart is empty.</p>';
+                if (totalEl) totalEl.innerText = '.00';
+            }
+        }
+function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCart(forceOpen = false) {
+            const modal = document.getElementById('cart-modal');
+            if (forceOpen) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.toggle('hidden');
+            }
+        }
+
+        function processCheckout() {
+            const btn = document.getElementById('checkout-btn');
+            btn.innerHTML = 'Processing... <span class="animate-spin inline-block ml-2">↻</span>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                toggleCart();
+                document.getElementById('payment-success').classList.remove('hidden');
+                cart = [];
+                updateCartUI();
+                btn.innerHTML = 'Secure Checkout 🔒';
+            }, 1500);
+        }
+
+        function closeSuccess() {
+            document.getElementById('payment-success').classList.add('hidden');
+        }
+
+        function closeNfcPortal() {
+            document.getElementById('nfc-product-modal').classList.add('hidden');
+        }
+
+        function repurchaseScanned() {
+            closeNfcPortal();
+            addToCart(currentScannedProduct.name, currentScannedProduct.price);
+        }
+</script>
+</body></html>

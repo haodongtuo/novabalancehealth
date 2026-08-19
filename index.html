@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -79,17 +79,13 @@
             <div class="flex justify-between h-16 md:h-20 items-center">
                 <div class="flex items-center">
                     <!-- Brand Logo -->
-                    <img src="logo.png" alt="NowaBalanceHealth Logo" class="h-12 md:h-16 w-auto object-contain" />
+                    <img src="/logo.png" alt="NowaBalanceHealth Logo" class="h-12 md:h-16 w-auto object-contain" />
                 </div>
                 <div class="hidden sm:ml-6 sm:flex sm:space-x-8 items-center">
                     <a href="#" class="text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium">Home</a>
                     <a href="#products" class="text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium">Shop</a>
                     <a class='text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium' href='/about'>About Us</a>
                     <a class='text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium' href='/contact'>Contact</a>
-                    <button id="nfc-btn" onclick="scanNFC()" class="flex items-center text-slate-500 hover:text-[#00B4D8] px-3 py-2 text-sm font-medium">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                        Verify NFC Tag
-                    </button>
                     <button onclick="toggleCart()" class="bg-[#00B4D8] text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-600 transition">Cart (<span id="cart-count">0</span>)</button>
                 </div>
             </div>
@@ -318,36 +314,19 @@
             const countEl = document.getElementById('cart-count');
             const itemsEl = document.getElementById('cart-items');
             const totalEl = document.getElementById('cart-total');
-            const emptyMsg = document.getElementById('empty-cart-msg');
             const checkoutBtn = document.getElementById('checkout-btn');
-
-            countEl.innerText = cart.length;
-            
+            if (countEl) countEl.innerText = cart.length;
             if (cart.length > 0) {
-                emptyMsg.style.display = 'none';
-                checkoutBtn.disabled = false;
-                
-                itemsEl.innerHTML = cart.map((item, index) => `
-                    <div class="flex justify-between items-center bg-white p-3 rounded border border-slate-100 shadow-sm">
-                        <span class="font-medium text-[#0A2540]">${item.name}</span>
-                        <div class="flex items-center gap-3">
-                            <span class="text-[#00B4D8] font-bold">$${item.price.toFixed(2)}</span>
-                            <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-600">&times;</button>
-                        </div>
-                    </div>
-                `).join('');
-                
+                if (checkoutBtn) checkoutBtn.disabled = false;
+                itemsEl.innerHTML = cart.map((item, index) => '<div class="flex justify-between items-center bg-white p-3 rounded border border-slate-100 shadow-sm"><span class="font-medium text-[#0A2540]">' + item.name + '</span><div class="flex items-center gap-3"><span class="text-[#00B4D8] font-bold">$' + item.price.toFixed(2) + '</span><button onclick="removeFromCart(' + index + ')" class="text-red-400 hover:text-red-600 text-lg font-bold px-2">&times;</button></div></div>').join('');
                 cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
-                totalEl.innerText = `$${cartTotal.toFixed(2)}`;
+                if (totalEl) totalEl.innerText = '$' + cartTotal.toFixed(2);
             } else {
-                emptyMsg.style.display = 'block';
-                itemsEl.innerHTML = '';
-                itemsEl.appendChild(emptyMsg);
-                totalEl.innerText = '$0.00';
-                checkoutBtn.disabled = true;
+                if (checkoutBtn) checkoutBtn.disabled = true;
+                itemsEl.innerHTML = '<p class="text-slate-500 text-center mt-10" id="empty-cart-msg">Your cart is empty.</p>';
+                if (totalEl) totalEl.innerText = '$0.00';
             }
         }
-
         function removeFromCart(index) {
             cart.splice(index, 1);
             updateCartUI();
