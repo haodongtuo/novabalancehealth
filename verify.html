@@ -108,6 +108,42 @@
                     </div>
                 </div>
 
+                <!-- Product Details (description, ingredients, usage, warnings) -->
+                <div id="product-details" class="hidden mb-6">
+                    <!-- Description -->
+                    <p id="product-description" class="text-sm text-slate-600 mb-4 leading-relaxed"></p>
+
+                    <!-- Accordion -->
+                    <div class="space-y-2">
+                        <!-- Ingredients -->
+                        <details class="bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                            <summary class="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-bold text-[#0A2540] select-none">
+                                <span>🌿 Key Ingredients</span>
+                                <svg class="w-4 h-4 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </summary>
+                            <ul id="product-ingredients" class="px-4 pb-3 space-y-1 text-sm text-slate-600"></ul>
+                        </details>
+
+                        <!-- Usage -->
+                        <details class="bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+                            <summary class="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-bold text-[#0A2540] select-none">
+                                <span>📌 How to Use</span>
+                                <svg class="w-4 h-4 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </summary>
+                            <p id="product-usage" class="px-4 pb-3 text-sm text-slate-600"></p>
+                        </details>
+
+                        <!-- Warnings -->
+                        <details class="bg-amber-50 rounded-xl border border-amber-100 overflow-hidden">
+                            <summary class="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-bold text-amber-800 select-none">
+                                <span>⚠️ Warnings</span>
+                                <svg class="w-4 h-4 text-amber-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </summary>
+                            <p id="product-warnings" class="px-4 pb-3 text-sm text-amber-700"></p>
+                        </details>
+                    </div>
+                </div>
+
                 <!-- Utilities: Calendar & Email -->
                 <div id="utilities-section" class="mb-6 space-y-4">
                     <!-- Add to Calendar -->
@@ -220,16 +256,44 @@
 
         const productDictionary = {
             'nb-vb-3ml-gel': {
-                name: { en: 'VagiBalance™ Gel (3ml)', zh: 'VagiBalance™ 女性私护凝胶 (3ml)' },
+                name:     { en: 'VagiBalance™ Gel (3ml)', zh: 'VagiBalance™ 女性私护凝胶 (3ml)' },
                 category: { en: 'Feminine Care', zh: '女性私护' },
                 img: '🌸',
-                link: '/vagi-balance.html'
+                link: '/vagi-balance.html',
+                description: 'A gentle, plant-based gel that restores and maintains optimal vaginal pH (3.8–4.5). Instantly relieves dryness, odor, and discomfort. Suitable for daily use and before or after intimacy.',
+                ingredients: ['Lactic Acid', 'Aloe Vera Gel', 'Prebiotic Oligosaccharides', 'Hyaluronic Acid', 'Chamomile Extract'],
+                usage: 'Apply approximately 5ml externally or internally once or twice daily, or as needed.',
+                warnings: 'For external and vaginal use only. Discontinue use if irritation occurs. Avoid during menstruation. Not compatible with latex condoms.'
             },
             'nb-pb-60-tab': {
-                name: { en: 'ProstaBalance™ (60 Tablets)', zh: 'ProstaBalance™ 前列腺养护 (60片)' },
-                category: { en: 'Men\'s Health', zh: '男性健康' },
+                name:     { en: 'ProstaBalance™ (60 Tablets)', zh: 'ProstaBalance™ 前列腺养护 (60片)' },
+                category: { en: "Men's Health", zh: '男性健康' },
                 img: '🛡️',
-                link: '/prosta-balance.html'
+                link: '/prosta-balance.html',
+                description: 'A triple-action formula for men 40+ that reduces nighttime urination, improves urinary flow, and helps inhibit excess DHT conversion — supporting long-term prostate health.',
+                ingredients: ['Saw Palmetto Extract (320mg)', 'Pumpkin Seed Oil', 'Beta-Sitosterol', 'Lycopene (15mg)', 'Zinc + Selenium'],
+                usage: 'Take 2 capsules daily with dinner. Allow 6–8 weeks of consistent use for noticeable results.',
+                warnings: 'Consult your doctor if taking blood thinners. Inform your physician before any PSA test. Not a substitute for professional medical diagnosis or treatment.'
+            },
+            'nb-fb-60-cap': {
+                name:     { en: 'FemBalance™ (60 Capsules)', zh: 'FemBalance™ 更年期养护 (60粒)' },
+                category: { en: "Women's Health", zh: '女性健康' },
+                img: '🌺',
+                link: '/product.html',
+                description: 'Formulated for women navigating menopause, FemBalance combines multi-strain probiotics with plant-based phytoestrogens to ease hot flashes, mood swings, and restless nights.',
+                ingredients: ['Multi-Strain Probiotic Blend (15B CFU)', 'Black Cohosh Extract', 'Soy Isoflavones', 'Vitex (Chasteberry)', 'Vitamin D3 + Magnesium'],
+                usage: 'Take 2 capsules daily with food. Best taken with breakfast for consistent results.',
+                warnings: 'Not recommended during pregnancy or breastfeeding. Consult your doctor if you have a history of hormone-sensitive conditions. Not intended to diagnose, treat, cure, or prevent any disease.'
+            },
+            'nb-ob-60-cap': {
+                name:     { en: 'OvaBalance™ (60 Capsules)', zh: 'OvaBalance™ 卵巢养护 (60粒)' },
+                category: { en: "Women's Fertility", zh: '女性备孕' },
+                img: '🌷',
+                link: '/ova-balance.html',
+                description: 'A science-backed blend designed to support ovarian health, regulate FSH/LH cycles, and promote natural conception. Also helps manage common PCOS symptoms.',
+                ingredients: ['Myo-Inositol (2000mg)', 'Folate (5-MTHF)', 'CoQ10 (200mg)', 'N-Acetyl Cysteine (NAC)', 'Zinc + Selenium'],
+                usage: 'Take 2 capsules daily — 1 in the morning and 1 in the evening with meals. Use consistently for at least 3 months.',
+                warnings: 'Inform your healthcare provider if trying to conceive. If pregnancy is confirmed, consult your doctor before continuing. Diabetic patients should consult a physician before use.'
             }
         };
 
@@ -365,6 +429,16 @@
             document.getElementById('product-batch').innerText = 'Batch: ' + (data.batch_number || 'N/A');
             document.getElementById('product-image').innerText = dict.img;
             document.getElementById('scan-count').innerText = currentScanCount;
+
+            // Populate product details section
+            if (dict.description) {
+                document.getElementById('product-description').innerText = dict.description;
+                const ingList = document.getElementById('product-ingredients');
+                ingList.innerHTML = (dict.ingredients || []).map(i => `<li class="flex items-start gap-2"><span class="text-[#00B4D8] mt-0.5">&#10003;</span><span>${i}</span></li>`).join('');
+                document.getElementById('product-usage').innerText = dict.usage || '';
+                document.getElementById('product-warnings').innerText = dict.warnings || '';
+                document.getElementById('product-details').classList.remove('hidden');
+            }
             document.getElementById('shop-link').href = dict.link;
 
             if (currentScanCount > 10) {
