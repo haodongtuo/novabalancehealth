@@ -24,27 +24,9 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "Product",
-              "name": "FemBalance™",
-              "url": "https://novabalancehealth.com/product.html",
-              "offers": {"@type": "Offer", "price": "45.00", "priceCurrency": "USD"}
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
               "name": "VagiBalance™",
               "url": "https://novabalancehealth.com/vagi-balance.html",
-              "offers": {"@type": "Offer", "price": "39.99", "priceCurrency": "USD"}
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "OvaBalance™",
-              "url": "https://novabalancehealth.com/ova-balance.html",
-              "offers": {"@type": "Offer", "price": "42.50", "priceCurrency": "USD"}
+              "offers": {"@type": "Offer", "price": "29.99", "priceCurrency": "USD"}
             }
           },
           {
@@ -53,7 +35,7 @@
               "@type": "Product",
               "name": "ProstaBalance™",
               "url": "https://novabalancehealth.com/prosta-balance.html",
-              "offers": {"@type": "Offer", "price": "42.50", "priceCurrency": "USD"}
+              "offers": {"@type": "Offer", "price": "99.99", "priceCurrency": "USD"}
             }
           }
         ]
@@ -123,7 +105,12 @@
             </div>
 
             <!-- Product Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- NOTE: FemBalance and OvaBalance are hidden until they reach production.
+                 Their cards are commented out below and their entries were removed from
+                 the hasOfferCatalog structured data at the top of this file.
+                 To relaunch: uncomment the two cards, restore the two catalog entries,
+                 and switch the grid back to lg:grid-cols-4 with no max-width. -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 
                 <!-- Product 1 -->
                 <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition duration-300 group flex flex-col">
@@ -132,28 +119,31 @@
                     </div>
                     <h3 class="text-lg font-bold text-[#0A2540] mb-2">VegiBalance Gel</h3>
                     <p class="text-sm text-slate-500 mb-2 h-10">Women's Intimate Care Gel</p>
-                    <p class="text-lg font-bold text-[#00B4D8] mb-4">$39.99</p>
+                    <p class="text-lg font-bold text-[#00B4D8] mb-4">$29.99</p>
                     <div class="mt-auto flex gap-2">
-                        <button onclick="addToCart('VegiBalance Gel', 39.99)" class="w-full bg-[#00B4D8] text-white font-semibold py-2 rounded hover:bg-blue-600 transition">Buy Now</button>
+                        <button onclick="addToCart('vagibalance')" class="w-full bg-[#00B4D8] text-white font-semibold py-2 rounded hover:bg-blue-600 transition">Buy Now</button>
                         <a class='w-full text-center border border-[#00B4D8] text-[#00B4D8] font-semibold py-2 rounded hover:bg-[#00B4D8] hover:text-white transition block' href='/vagi-balance'>Details</a>
                     </div>
                 </div>
 
-                <!-- Product 2 -->
+                <!-- HIDDEN UNTIL PRODUCTION - FemBalance™
                 <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition duration-300 group flex flex-col">
                     <div class="h-48 bg-slate-200 rounded-lg mb-4 flex items-center justify-center text-slate-400 group-hover:bg-[#00B4D8]/10 transition">
                         [Image: FemBalance]
                     </div>
                     <h3 class="text-lg font-bold text-[#0A2540] mb-2">FemBalance™</h3>
-                    <p class="text-sm text-slate-500 mb-2 h-10">Intimate & Microbiome Support</p>
+                    <p class="text-sm text-slate-500 mb-2 h-10">Intimate &amp; Microbiome Support</p>
                     <p class="text-lg font-bold text-[#00B4D8] mb-4">$45.00</p>
                     <div class="mt-auto flex gap-2">
                         <button onclick="addToCart('FemBalance™', 45.00)" class="w-full bg-[#00B4D8] text-white font-semibold py-2 rounded hover:bg-blue-600 transition">Buy Now</button>
                         <a class='w-full text-center border border-[#00B4D8] text-[#00B4D8] font-semibold py-2 rounded hover:bg-[#00B4D8] hover:text-white transition block' href='/product'>Details</a>
                     </div>
                 </div>
+                -->
 
-                <!-- Product 3 -->
+                <!-- HIDDEN UNTIL PRODUCTION - OvaBalance™
+                     NOTE: this card advertised $49.99 while ova-balance.html displayed $42.50.
+                     Settle on one price before relaunching it.
                 <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition duration-300 group flex flex-col">
                     <div class="h-48 bg-slate-200 rounded-lg mb-4 flex items-center justify-center text-slate-400 group-hover:bg-[#00B4D8]/10 transition">
                         [Image: OvaBalance]
@@ -166,6 +156,7 @@
                         <a class='w-full text-center border border-[#00B4D8] text-[#00B4D8] font-semibold py-2 rounded hover:bg-[#00B4D8] hover:text-white transition block' href='/ova-balance'>Details</a>
                     </div>
                 </div>
+                -->
 
                 <!-- Product 4 -->
                 <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition duration-300 group flex flex-col">
@@ -174,9 +165,9 @@
                     </div>
                     <h3 class="text-lg font-bold text-[#0A2540] mb-2">ProstaBalance™</h3>
                     <p class="text-sm text-slate-500 mb-2 h-10">Men's Prostate Support</p>
-                    <p class="text-lg font-bold text-[#00B4D8] mb-4">$42.50</p>
+                    <p class="text-lg font-bold text-[#00B4D8] mb-4">$99.99</p>
                     <div class="mt-auto flex gap-2">
-                        <button onclick="addToCart('ProstaBalance™', 42.50)" class="w-full bg-[#00B4D8] text-white font-semibold py-2 rounded hover:bg-blue-600 transition">Buy Now</button>
+                        <button onclick="addToCart('prostabalance')" class="w-full bg-[#00B4D8] text-white font-semibold py-2 rounded hover:bg-blue-600 transition">Buy Now</button>
                         <a class='w-full text-center border border-[#00B4D8] text-[#00B4D8] font-semibold py-2 rounded hover:bg-[#00B4D8] hover:text-white transition block' href='/prosta-balance'>Details</a>
                     </div>
                 </div>
@@ -210,8 +201,8 @@
     </section>
 
     <!-- Cart Modal & Checkout -->
-    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[100] flex justify-end">
-        <div class="w-full max-w-md bg-white h-full shadow-xl flex flex-col">
+    <div id="cart-modal" class="fixed inset-0 hidden z-[100] flex justify-end pointer-events-none">
+        <div class="w-full max-w-md bg-white h-full shadow-xl flex flex-col pointer-events-auto ml-auto">
             <div class="p-6 border-b border-slate-200 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-[#0A2540]">Your Cart</h2>
                 <button onclick="toggleCart()" class="text-slate-500 hover:text-slate-800 text-2xl font-bold">&times;</button>
@@ -245,6 +236,12 @@
     </div>
 
     <!-- NFC Product Portal Modal (After Scan) -->
+    <!-- DISABLED - unverified NFC repurchase portal.
+         This modal hardcoded FemBalance™ $45.00 regardless of which product was
+         scanned, and it was opened by scanNFC() (removed below), which declared any
+         NFC tag authentic without ever calling /.netlify/functions/verify_nfc.
+         Real verification lives on verify.html, which does query the database.
+         Do not re-enable this without wiring it to verify_nfc first.
     <div id="nfc-product-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-[150] flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden transform transition-all">
             <div class="bg-[#0A2540] p-6 text-center relative">
@@ -281,6 +278,7 @@
             </div>
         </div>
     </div>
+    -->
 
     <!-- Payment Success Modal -->
     <div id="payment-success" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[200] flex items-center justify-center">
@@ -295,80 +293,15 @@
     </div>
 
     <script>
-        let cart = [];
-        let cartTotal = 0;
-        
-        // Mock data for currently scanned product
-        let currentScannedProduct = {
-            name: 'FemBalance™',
-            price: 45.00
-        };
+        // Cart + Stripe Checkout live in /cart.js (loaded above).
 
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            updateCartUI();
-            toggleCart(true);
-        }
-
-        function updateCartUI() {
-            const countEl = document.getElementById('cart-count');
-            const itemsEl = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total');
-            const checkoutBtn = document.getElementById('checkout-btn');
-            if (countEl) countEl.innerText = cart.length;
-            if (cart.length > 0) {
-                if (checkoutBtn) checkoutBtn.disabled = false;
-                itemsEl.innerHTML = cart.map((item, index) => '<div class="flex justify-between items-center bg-white p-3 rounded border border-slate-100 shadow-sm"><span class="font-medium text-[#0A2540]">' + item.name + '</span><div class="flex items-center gap-3"><span class="text-[#00B4D8] font-bold">$' + item.price.toFixed(2) + '</span><button onclick="removeFromCart(' + index + ')" class="text-red-400 hover:text-red-600 text-lg font-bold px-2">&times;</button></div></div>').join('');
-                cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
-                if (totalEl) totalEl.innerText = '$' + cartTotal.toFixed(2);
-            } else {
-                if (checkoutBtn) checkoutBtn.disabled = true;
-                itemsEl.innerHTML = '<p class="text-slate-500 text-center mt-10" id="empty-cart-msg">Your cart is empty.</p>';
-                if (totalEl) totalEl.innerText = '$0.00';
-            }
-        }
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function toggleCart(forceOpen = false) {
-            const modal = document.getElementById('cart-modal');
-            if (forceOpen) {
-                modal.classList.remove('hidden');
-            } else {
-                modal.classList.toggle('hidden');
-            }
-        }
-
-        function processCheckout() {
-            const btn = document.getElementById('checkout-btn');
-            btn.innerHTML = 'Processing... <span class="animate-spin inline-block ml-2">↻</span>';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                toggleCart();
-                document.getElementById('payment-success').classList.remove('hidden');
-                cart = [];
-                updateCartUI();
-                btn.innerHTML = 'Secure Checkout 🔒';
-            }, 1500);
-        }
-
-        function closeSuccess() {
-            document.getElementById('payment-success').classList.add('hidden');
-        }
-
-        function closeNfcPortal() {
-            document.getElementById('nfc-product-modal').classList.add('hidden');
-        }
-
-        function repurchaseScanned() {
-            closeNfcPortal();
-            addToCart(currentScannedProduct.name, currentScannedProduct.price);
-        }
-
-        // Web NFC API Integration
+        // REMOVED: closeNfcPortal(), repurchaseScanned(), scanNFC().
+        // scanNFC() used the Web NFC API to read a tag and immediately declared it
+        // "Authentic NowaBalance Product" without calling verify_nfc - any tag passed,
+        // and a random serial number was invented when the tag had none. Nothing ever
+        // called it, so this was never reachable in production.
+        // Genuine verification is verify.html -> /.netlify/functions/verify_nfc.
+        /*
         async function scanNFC() {
             const toast = document.getElementById('nfc-toast');
             const msg = document.getElementById('nfc-msg');
@@ -418,6 +351,8 @@
                 }, 3000);
             }
         }
+        */
     </script>
+    <script src="/cart.js"></script>
 </body>
 </html>

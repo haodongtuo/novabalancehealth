@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Order Confirmed | NovaBalance Health</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --medical-blue: #0A2540; --tech-accent: #00B4D8; }
+        body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+        @keyframes pop { 0% { transform: scale(.6); opacity: 0 } 60% { transform: scale(1.08) } 100% { transform: scale(1); opacity: 1 } }
+        .pop { animation: pop .45s cubic-bezier(.2,.8,.3,1) both; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-3xl mx-auto px-4 py-4 flex justify-center">
+            <a href="/"><img src="/logo.png" alt="NovaBalance Health" class="h-12 w-auto object-contain"></a>
+        </div>
+    </nav>
+
+    <main class="flex-1 flex items-center justify-center px-4 py-12">
+        <div class="bg-white rounded-2xl shadow-xl max-w-lg w-full overflow-hidden">
+            <div class="bg-[#0A2540] p-8 text-center">
+                <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-[#0A2540] shadow-lg pop">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold text-white mb-1" id="title">Thank you for your order</h1>
+                <p class="text-[#00B4D8] text-sm" id="subtitle">Your payment was received.</p>
+            </div>
+
+            <div class="p-8">
+                <div class="bg-slate-50 border border-slate-100 rounded-xl p-5 mb-6 text-sm space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-slate-500" id="label-order">Order reference</span>
+                        <span class="font-mono text-xs text-[#0A2540] break-all text-right" id="order-ref">—</span>
+                    </div>
+                    <p class="text-slate-500 text-xs pt-2 border-t border-slate-200" id="receipt-note">
+                        A payment receipt has been emailed to you by our payment processor, Stripe.
+                    </p>
+                </div>
+
+                <div class="space-y-2 text-sm text-slate-600 mb-8">
+                    <p id="next-1">📦 We prepare and ship orders within 1–2 business days.</p>
+                    <p id="next-2">🚚 Standard delivery usually takes 3–7 business days.</p>
+                    <p id="next-3">✉️ Questions? Email <a href="mailto:support@novabalancehealth.com" class="text-[#00B4D8] hover:underline">support@novabalancehealth.com</a>.</p>
+                </div>
+
+                <a href="/" class="block w-full text-center bg-[#00B4D8] text-white font-bold py-3.5 rounded-xl hover:bg-blue-600 transition shadow-md" id="btn-home">
+                    Back to Store
+                </a>
+                <button onclick="toggleLang()" class="w-full text-center text-slate-400 hover:text-[#00B4D8] text-xs mt-4 transition" id="lang-btn">翻译成中文</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Stripe appends ?session_id=cs_... on redirect. It is a reference only:
+        // the authoritative record is created by the stripe_webhook function, so
+        // nothing on this page decides whether an order is real.
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var id = params.get('session_id');
+            var el = document.getElementById('order-ref');
+            if (id) {
+                el.innerText = id.length > 24 ? id.slice(0, 12) + '…' + id.slice(-6) : id;
+                el.title = id;
+            } else {
+                el.innerText = 'Not available';
+            }
+        })();
+
+        var lang = 'en';
+        var T = {
+            en: {
+                title: 'Thank you for your order',
+                subtitle: 'Your payment was received.',
+                labelOrder: 'Order reference',
+                receipt: 'A payment receipt has been emailed to you by our payment processor, Stripe.',
+                n1: '📦 We prepare and ship orders within 1–2 business days.',
+                n2: '🚚 Standard delivery usually takes 3–7 business days.',
+                n3: '✉️ Questions? Email <a href="mailto:support@novabalancehealth.com" class="text-[#00B4D8] hover:underline">support@novabalancehealth.com</a>.',
+                home: 'Back to Store',
+                langBtn: '翻译成中文'
+            },
+            zh: {
+                title: '感谢您的订购',
+                subtitle: '我们已收到您的付款。',
+                labelOrder: '订单编号',
+                receipt: '付款收据已由我们的支付服务商 Stripe 发送至您的邮箱。',
+                n1: '📦 我们会在 1–2 个工作日内备货发出。',
+                n2: '🚚 标准配送通常需要 3–7 个工作日。',
+                n3: '✉️ 有疑问请联系 <a href="mailto:support@novabalancehealth.com" class="text-[#00B4D8] hover:underline">support@novabalancehealth.com</a>。',
+                home: '返回商店',
+                langBtn: 'Translate to English'
+            }
+        };
+        function toggleLang() {
+            lang = lang === 'en' ? 'zh' : 'en';
+            var t = T[lang];
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('subtitle').innerText = t.subtitle;
+            document.getElementById('label-order').innerText = t.labelOrder;
+            document.getElementById('receipt-note').innerText = t.receipt;
+            document.getElementById('next-1').innerText = t.n1;
+            document.getElementById('next-2').innerText = t.n2;
+            document.getElementById('next-3').innerHTML = t.n3;
+            document.getElementById('btn-home').innerText = t.home;
+            document.getElementById('lang-btn').innerText = t.langBtn;
+        }
+    </script>
+</body>
+</html>

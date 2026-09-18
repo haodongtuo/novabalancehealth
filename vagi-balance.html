@@ -8,7 +8,7 @@
     {
       "@context": "https://schema.org/",
       "@type": "Product",
-      "name": "VagiBalance™,
+      "name": "VagiBalance™",
       "description": "VagiBalance™is a gentle vaginal care gel designed to help maintain a healthy vaginal pH environment and support everyday feminine comfort. Lightweight, non-irritating, pH-balanced formula.",
       "brand": {
         "@type": "Brand",
@@ -19,7 +19,7 @@
       "offers": {
         "@type": "Offer",
         "priceCurrency": "USD",
-        "price": "39.99",
+        "price": "29.99",
         "availability": "https://schema.org/InStock",
         "url": "https://novabalancehealth.com/vagi-balance.html",
         "seller": {
@@ -60,7 +60,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 md:h-20 items-center">
                 <div class="flex items-center">
-                    <a href='/'>
+                    <a id="brand-home-link" href='/'>
                         <img src="/logo.png" alt="NowaBalanceHealth Logo" class="h-12 md:h-16 w-auto object-contain" />
                     </a>
                 </div>
@@ -77,7 +77,7 @@
 
     <!-- Product Detail Section -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <a class='text-slate-500 hover:text-[#00B4D8] inline-flex items-center mb-8' href='/'>
+        <a id="back-to-products" class='text-slate-500 hover:text-[#00B4D8] inline-flex items-center mb-8' href='/'>
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             Back to Products
         </a>
@@ -97,7 +97,7 @@
             <div class="flex flex-col">
                 <div class="flex justify-between items-start mb-4">
                     <h1 class="text-4xl font-bold text-[#0A2540]">VagiBalance™</h1>
-                    <span id="product-price" class="text-2xl font-bold text-[#00B4D8]">$39.99</span>
+                    <span id="product-price" class="text-2xl font-bold text-[#00B4D8]">$29.99</span>
                 </div>
                 <h2 class="text-lg text-slate-500 font-medium mb-4">Vaginal pH Balance Gel</h2>
                 
@@ -170,7 +170,7 @@
                 </div>
 
                 <div class="mt-auto flex flex-col gap-3">
-                    <button class="w-full bg-[#00B4D8] text-white font-bold py-4 rounded-xl hover:bg-blue-600 transition shadow-lg text-lg flex items-center justify-center gap-2" onclick="addToCart('VagiBalance™', 39.99)">
+                    <button class="w-full bg-[#00B4D8] text-white font-bold py-4 rounded-xl hover:bg-blue-600 transition shadow-lg text-lg flex items-center justify-center gap-2" onclick="addToCart('vagibalance')">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         Add to Cart
                     </button>
@@ -208,8 +208,8 @@
           }).catch(function(){});
     </script>
 
-<div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[100] flex justify-end">
-        <div class="w-full max-w-md bg-white h-full shadow-xl flex flex-col">
+<div id="cart-modal" class="fixed inset-0 hidden z-[100] flex justify-end pointer-events-none">
+        <div class="w-full max-w-md bg-white h-full shadow-xl flex flex-col pointer-events-auto ml-auto">
             <div class="p-6 border-b border-slate-200 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-[#0A2540]">Your Cart</h2>
                 <button onclick="toggleCart()" class="text-slate-500 hover:text-slate-800 text-2xl font-bold">&times;</button>
@@ -245,85 +245,28 @@
     </div>
 
 <script>
-let cart = [];
-        let cartTotal = 0;
-        
-        // Mock data for currently scanned product
-        let currentScannedProduct = {
-            name: 'FemBalance™',
-            price: 45.00
-        };
+        // Cart + Stripe Checkout live in /cart.js (loaded above).
 
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            updateCartUI();
-            toggleCart(true);
-        }
+        // Single-product mode.
+        // verify.html sends NFC visitors here with ?nfc=1. In that flow the customer
+        // scanned one specific bottle, so every route back to the multi-product
+        // storefront is hidden and only this product stays reachable.
+        (function applyNfcSingleProductMode() {
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('nfc') !== '1') return;
 
-        function updateCartUI() {
-            var countEl = document.getElementById('cart-count');
-            var itemsEl = document.getElementById('cart-items');
-            var totalEl = document.getElementById('cart-total');
-            var checkoutBtn = document.getElementById('checkout-btn');
-            if (countEl) countEl.innerText = cart.length;
-            if (cart.length > 0) {
-                if (checkoutBtn) checkoutBtn.disabled = false;
-                var html = '';
-                for (var i = 0; i < cart.length; i++) {
-                    html += '<div class="flex justify-between items-center bg-white p-3 rounded border border-slate-100 shadow-sm mb-2">';
-                    html += '<span class="font-medium text-[#0A2540]">' + cart[i].name + '</span>';
-                    html += '<div class="flex items-center gap-3"><span class="text-[#00B4D8] font-bold">$' + cart[i].price.toFixed(2) + '</span>';
-                    html += '<button onclick="removeFromCart(' + i + ')" class="text-red-400 hover:text-red-600 text-xl font-bold px-2">&times;</button>';
-                    html += '</div></div>';
-                }
-                itemsEl.innerHTML = html;
-                var total = cart.reduce(function(s,x){return s+x.price;},0);
-                if (totalEl) totalEl.innerText = '$' + total.toFixed(2);
-            } else {
-                if (checkoutBtn) checkoutBtn.disabled = true;
-                itemsEl.innerHTML = '<p class="text-slate-500 text-center mt-10">Your cart is empty.</p>';
-                if (totalEl) totalEl.innerText = '.00';
+            var brand = document.getElementById('brand-home-link');
+            if (brand) {
+                brand.removeAttribute('href');
+                brand.style.cursor = 'default';
             }
-        }
-function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
 
-        function toggleCart(forceOpen = false) {
-            const modal = document.getElementById('cart-modal');
-            if (forceOpen) {
-                modal.classList.remove('hidden');
-            } else {
-                modal.classList.toggle('hidden');
-            }
-        }
+            var back = document.getElementById('back-to-products');
+            if (back) back.classList.add('hidden');
 
-        function processCheckout() {
-            const btn = document.getElementById('checkout-btn');
-            btn.innerHTML = 'Processing... <span class="animate-spin inline-block ml-2">↻</span>';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                toggleCart();
-                document.getElementById('payment-success').classList.remove('hidden');
-                cart = [];
-                updateCartUI();
-                btn.innerHTML = 'Secure Checkout 🔒';
-            }, 1500);
-        }
-
-        function closeSuccess() {
-            document.getElementById('payment-success').classList.add('hidden');
-        }
-
-        function closeNfcPortal() {
-            document.getElementById('nfc-product-modal').classList.add('hidden');
-        }
-
-        function repurchaseScanned() {
-            closeNfcPortal();
-            addToCart(currentScannedProduct.name, currentScannedProduct.price);
-        }
+            var exits = document.querySelectorAll('a[href="/"], a[href="/#products"], a[href="/index.html"]');
+            for (var i = 0; i < exits.length; i++) exits[i].classList.add('hidden');
+        })();
 </script>
+    <script src="/cart.js"></script>
 </body></html>

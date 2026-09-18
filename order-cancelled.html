@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Checkout Cancelled | NovaBalance Health</title>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }</style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-3xl mx-auto px-4 py-4 flex justify-center">
+            <a href="/"><img src="/logo.png" alt="NovaBalance Health" class="h-12 w-auto object-contain"></a>
+        </div>
+    </nav>
+
+    <main class="flex-1 flex items-center justify-center px-4 py-12">
+        <div class="bg-white rounded-2xl shadow-xl max-w-lg w-full p-8 text-center">
+            <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-5">
+                <svg class="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+                </svg>
+            </div>
+
+            <h1 class="text-2xl font-bold text-[#0A2540] mb-2" id="title">Checkout cancelled</h1>
+            <p class="text-slate-500 mb-2" id="body">
+                No payment was taken and nothing was charged to your card.
+            </p>
+            <p class="text-slate-400 text-sm mb-8" id="body2">
+                Your items are still waiting whenever you want to finish.
+            </p>
+
+            <a href="/" class="block w-full bg-[#00B4D8] text-white font-bold py-3.5 rounded-xl hover:bg-blue-600 transition shadow-md" id="btn-home">
+                Return to Store
+            </a>
+            <button onclick="toggleLang()" class="w-full text-slate-400 hover:text-[#00B4D8] text-xs mt-4 transition" id="lang-btn">翻译成中文</button>
+        </div>
+    </main>
+
+    <script>
+        var lang = 'en';
+        var T = {
+            en: {
+                title: 'Checkout cancelled',
+                body: 'No payment was taken and nothing was charged to your card.',
+                body2: 'Your items are still waiting whenever you want to finish.',
+                home: 'Return to Store',
+                langBtn: '翻译成中文'
+            },
+            zh: {
+                title: '结账已取消',
+                body: '未发生任何扣款，您的银行卡没有被收取费用。',
+                body2: '您随时可以回来完成购买。',
+                home: '返回商店',
+                langBtn: 'Translate to English'
+            }
+        };
+        function toggleLang() {
+            lang = lang === 'en' ? 'zh' : 'en';
+            var t = T[lang];
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('body').innerText = t.body;
+            document.getElementById('body2').innerText = t.body2;
+            document.getElementById('btn-home').innerText = t.home;
+            document.getElementById('lang-btn').innerText = t.langBtn;
+        }
+    </script>
+</body>
+</html>

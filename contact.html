@@ -127,8 +127,8 @@
     </footer>
 
 
-<div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[100] flex justify-end">
-        <div class="w-full max-w-md bg-white h-full shadow-xl flex flex-col">
+<div id="cart-modal" class="fixed inset-0 hidden z-[100] flex justify-end pointer-events-none">
+        <div class="w-full max-w-md bg-white h-full shadow-xl flex flex-col pointer-events-auto ml-auto">
             <div class="p-6 border-b border-slate-200 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-[#0A2540]">Your Cart</h2>
                 <button onclick="toggleCart()" class="text-slate-500 hover:text-slate-800 text-2xl font-bold">&times;</button>
@@ -164,85 +164,7 @@
     </div>
 
 <script>
-let cart = [];
-        let cartTotal = 0;
-        
-        // Mock data for currently scanned product
-        let currentScannedProduct = {
-            name: 'FemBalance™',
-            price: 45.00
-        };
-
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            updateCartUI();
-            toggleCart(true);
-        }
-
-        function updateCartUI() {
-            var countEl = document.getElementById('cart-count');
-            var itemsEl = document.getElementById('cart-items');
-            var totalEl = document.getElementById('cart-total');
-            var checkoutBtn = document.getElementById('checkout-btn');
-            if (countEl) countEl.innerText = cart.length;
-            if (cart.length > 0) {
-                if (checkoutBtn) checkoutBtn.disabled = false;
-                var html = '';
-                for (var i = 0; i < cart.length; i++) {
-                    html += '<div class="flex justify-between items-center bg-white p-3 rounded border border-slate-100 shadow-sm mb-2">';
-                    html += '<span class="font-medium text-[#0A2540]">' + cart[i].name + '</span>';
-                    html += '<div class="flex items-center gap-3"><span class="text-[#00B4D8] font-bold">$' + cart[i].price.toFixed(2) + '</span>';
-                    html += '<button onclick="removeFromCart(' + i + ')" class="text-red-400 hover:text-red-600 text-xl font-bold px-2">&times;</button>';
-                    html += '</div></div>';
-                }
-                itemsEl.innerHTML = html;
-                var total = cart.reduce(function(s,x){return s+x.price;},0);
-                if (totalEl) totalEl.innerText = '$' + total.toFixed(2);
-            } else {
-                if (checkoutBtn) checkoutBtn.disabled = true;
-                itemsEl.innerHTML = '<p class="text-slate-500 text-center mt-10">Your cart is empty.</p>';
-                if (totalEl) totalEl.innerText = '.00';
-            }
-        }
-function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function toggleCart(forceOpen = false) {
-            const modal = document.getElementById('cart-modal');
-            if (forceOpen) {
-                modal.classList.remove('hidden');
-            } else {
-                modal.classList.toggle('hidden');
-            }
-        }
-
-        function processCheckout() {
-            const btn = document.getElementById('checkout-btn');
-            btn.innerHTML = 'Processing... <span class="animate-spin inline-block ml-2">↻</span>';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                toggleCart();
-                document.getElementById('payment-success').classList.remove('hidden');
-                cart = [];
-                updateCartUI();
-                btn.innerHTML = 'Secure Checkout 🔒';
-            }, 1500);
-        }
-
-        function closeSuccess() {
-            document.getElementById('payment-success').classList.add('hidden');
-        }
-
-        function closeNfcPortal() {
-            document.getElementById('nfc-product-modal').classList.add('hidden');
-        }
-
-        function repurchaseScanned() {
-            closeNfcPortal();
-            addToCart(currentScannedProduct.name, currentScannedProduct.price);
-        }
+        // Cart + Stripe Checkout live in /cart.js (loaded below).
 </script>
+    <script src="/cart.js"></script>
 </body></html>
