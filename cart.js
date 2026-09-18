@@ -84,7 +84,11 @@ function addToCart(productId) {
   cart[productId] = (cart[productId] || 0) + 1;
   saveCart();
   updateCartUI();
-  showToast(PRODUCTS[productId].name + ' added to cart ✓', true);
+  // Auto-open cart panel so user can see items and checkout
+  const modal = document.getElementById('cart-modal');
+  if (modal && modal.classList.contains('hidden')) {
+    toggleCart();
+  }
 }
 
 function changeQty(productId, delta) {
