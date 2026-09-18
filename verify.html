@@ -166,7 +166,7 @@
                             <input type="email" id="user-email" placeholder="Your email address" class="flex-1 text-sm px-3 py-2 rounded-lg border border-amber-200 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400">
                             <button onclick="subscribeEmail()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-lg text-sm transition shadow-sm" id="text-subscribe">Get Code</button>
                         </div>
-                        <p id="subscribe-msg" class="text-xs text-green-600 mt-2 hidden font-medium">✨ Check your inbox shortly!</p>
+                        <p id="subscribe-msg" class="text-sm mt-3 hidden font-medium"></p>
                     </div>
                 </div>
 
@@ -479,34 +479,51 @@
 
         function downloadICS() {
             var prodName = document.getElementById('product-name') ? document.getElementById('product-name').innerText : 'NovaBalance Supplement';
-            // Tomorrow at 8am as default start time
-            var start = new Date();
-            start.setDate(start.getDate() + 1);
-            start.setHours(8, 0, 0, 0);
-            var end = new Date(start.getTime() + 30 * 60000);
-            var fmt = function(d) {
-                return d.getFullYear() +
-                    String(d.getMonth()+1).padStart(2,'0') +
-                    String(d.getDate()).padStart(2,'0') + 'T' +
-                    String(d.getHours()).padStart(2,'0') +
-                    String(d.getMinutes()).padStart(2,'0') + '00';
-            };
-            // Google Calendar URL (works on all phones)
-            var gcalUrl = 'https://calendar.google.com/calendar/r/eventedit?' +
-                'text=' + encodeURIComponent('Take ' + prodName) +
-                '&details=' + encodeURIComponent('Daily reminder to take your NovaBalance supplement.') +
-                '&dates=' + fmt(start) + '/' + fmt(end) +
-                '&recur=' + encodeURIComponent('RRULE:FREQ=DAILY');
-            window.open(gcalUrl, '_blank');
+            // Opens a .ics file from our server — phone native calendar picks it up automatically, no login needed
+            window.location.href = '/.netlify/functions/reminder?product=' + encodeURIComponent(prodName);
         }
-function subscribeEmail() {
-            const email = document.getElementById('user-email').value;
-            if (email && email.includes('@')) {
-                document.getElementById('subscribe-msg').classList.remove('hidden');
-                document.getElementById('user-email').value = '';
-                setTimeout(() => {
-                    document.getElementById('subscribe-msg').classList.add('hidden');
-                }, 4000);
+async function subscribeEmail() {
+            const emailEl = document.getElementById('user-email');
+            const msgEl   = document.getElementById('subscribe-msg');
+            const btn     = document.getElementById('text-subscribe');
+            const email   = emailEl.value.trim();
+
+            if (!email || !email.includes('@')) {
+                msgEl.className = 'text-sm mt-3 font-medium text-red-500';
+                msgEl.innerText = 'Please enter a valid email address.';
+                msgEl.classList.remove('hidden');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = '...';
+            msgEl.classList.add('hidden');
+
+            try {
+                const res  = await fetch('/.netlify/functions/subscribe_email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
+                const data = await res.json();
+
+                if (data.code) {
+                    emailEl.value = '';
+                    msgEl.className = 'mt-3 p-3 bg-green-50 border border-green-200 rounded-lg text-center';
+                    msgEl.innerHTML = '🎉 Your 15% off code: <span class="font-mono font-bold text-lg text-green-700 tracking-widest select-all">' + data.code + '</span><br><span class="text-xs text-slate-500">Copy it — use at checkout!</span>';
+                    msgEl.classList.remove('hidden');
+                } else {
+                    msgEl.className = 'text-sm mt-3 font-medium text-red-500';
+                    msgEl.innerText = data.error || 'Something went wrong. Please try again.';
+                    msgEl.classList.remove('hidden');
+                }
+            } catch (err) {
+                msgEl.className = 'text-sm mt-3 font-medium text-red-500';
+                msgEl.innerText = 'Network error. Please try again.';
+                msgEl.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Get Code';
             }
         }
 
