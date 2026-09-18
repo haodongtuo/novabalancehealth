@@ -479,34 +479,25 @@
 
         function downloadICS() {
             var prodName = document.getElementById('product-name') ? document.getElementById('product-name').innerText : 'NovaBalance Supplement';
-            var now = new Date();
-            var pad = function(n){ return String(n).padStart(2,'0'); };
-            var dtstart = now.getFullYear() + pad(now.getMonth()+1) + pad(now.getDate()) + 'T' + pad(now.getHours()) + pad(now.getMinutes()) + '00';
-            var icsLines = [
-                'BEGIN:VCALENDAR',
-                'VERSION:2.0',
-                'PRODID:-//NovaBalance//Reminder//EN',
-                'BEGIN:VEVENT',
-                'SUMMARY:Take ' + prodName,
-                'DESCRIPTION:Daily reminder to take your NovaBalance supplement.',
-                'DTSTART:' + dtstart,
-                'RRULE:FREQ=DAILY',
-                'BEGIN:VALARM',
-                'TRIGGER:-PT0M',
-                'ACTION:DISPLAY',
-                'DESCRIPTION:Reminder',
-                'END:VALARM',
-                'END:VEVENT',
-                'END:VCALENDAR'
-            ].join('\r\n');
-            var encoded = encodeURIComponent(icsLines);
-            var link = document.createElement('a');
-            link.href = 'data:text/calendar;charset=utf-8,' + encoded;
-            link.download = 'novabalance_reminder.ics';
-            link.setAttribute('target', '_blank');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Tomorrow at 8am as default start time
+            var start = new Date();
+            start.setDate(start.getDate() + 1);
+            start.setHours(8, 0, 0, 0);
+            var end = new Date(start.getTime() + 30 * 60000);
+            var fmt = function(d) {
+                return d.getFullYear() +
+                    String(d.getMonth()+1).padStart(2,'0') +
+                    String(d.getDate()).padStart(2,'0') + 'T' +
+                    String(d.getHours()).padStart(2,'0') +
+                    String(d.getMinutes()).padStart(2,'0') + '00';
+            };
+            // Google Calendar URL (works on all phones)
+            var gcalUrl = 'https://calendar.google.com/calendar/r/eventedit?' +
+                'text=' + encodeURIComponent('Take ' + prodName) +
+                '&details=' + encodeURIComponent('Daily reminder to take your NovaBalance supplement.') +
+                '&dates=' + fmt(start) + '/' + fmt(end) +
+                '&recur=' + encodeURIComponent('RRULE:FREQ=DAILY');
+            window.open(gcalUrl, '_blank');
         }
 function subscribeEmail() {
             const email = document.getElementById('user-email').value;
